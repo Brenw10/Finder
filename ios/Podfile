@@ -1,0 +1,6 @@
+platform :ios, '9.0'
+
+target 'Finder' do
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+end
