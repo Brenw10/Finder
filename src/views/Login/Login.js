@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import styles from 'Finder/src/styles/Login';
 import LoginOptions from 'Finder/src/views/Login/LoginOptions';
 import SignIn from 'Finder/src/views/Login/SignIn';
@@ -35,7 +35,8 @@ export default class Login extends Component {
             <View style={styles.container}>
                 <View style={styles.logo}
                     animation='bounceIn' duration={1200} delay={200}>
-                    <Text>Place a logo here</Text>
+                    <Image style={{ width: 150, height: 150 }}
+                        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png' }} />
                 </View>
                 {this.renderLoginOptions()}
                 {this.renderSignIn()}
