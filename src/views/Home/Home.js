@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import firebase from 'react-native-firebase';
+import CloserUsersList from 'Finder/src/components/CloserUsersList';
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.watchPosition();
+        this.setCurrentPosition();
     }
-    watchPosition() {
+    setCurrentPosition() {
+        const uid = firebase.auth().currentUser.uid;
         navigator
             .geolocation
-            .watchPosition(currentPosition => this.setCurrentPosition(currentPosition));
+            .watchPosition(currentPosition =>
+                firebase
+                    .database()
+                    .ref(`users/${uid}/position`)
+                    .set(currentPosition)
+            );
     }
-    setCurrentPosition(currentPosition) {
-        const uid = firebase.auth().currentUser.uid;
-        firebase
-            .database()
-            .ref(`users/${uid}/position`)
-            .set(currentPosition);
-    }
+
     render() {
         return (
             <View>
-                <Text>Home</Text>
+                <CloserUsersList />
             </View>
         );
     }
