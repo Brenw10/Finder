@@ -56,6 +56,7 @@ export default class Login extends Component {
         if (this.state.selectedView !== this.state.views['SIGN_IN']) return;
         return (
             <SignIn
+                success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
     }

@@ -5,18 +5,22 @@ import CustomTextInput from 'Finder/src/components/CustomTextInput';
 import CustomButton from 'Finder/src/components/CustomButton';
 import { View } from 'react-native-animatable';
 import firebase from 'react-native-firebase';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class SignIn extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isLoading: false
+        };
     }
     login(email, password) {
+        this.setState({ isLoading: true });
         firebase
             .auth()
             .signInAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(console.log)
-            .catch(() => this.props.toggleAlert(true));
+            .then(() => { this.setState({ isLoading: false }); this.props.success(); })
+            .catch(() => { this.setState({ isLoading: false }); this.props.toggleAlert(true); });
     }
     render() {
         return (
@@ -37,6 +41,7 @@ export default class SignIn extends Component {
                         />
                     </View>
                 </View>
+                <Spinner visible={this.state.isLoading} />
             </View>
         );
     }

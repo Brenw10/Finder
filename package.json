@@ -12,6 +12,7 @@
     "react-native-animatable": "^1.2.4",
     "react-native-awesome-alerts": "^1.0.6",
     "react-native-firebase": "^3.2.4",
+    "react-native-loading-spinner-overlay": "^0.5.2",
     "react-navigation": "^1.0.0"
   },
   "devDependencies": {
