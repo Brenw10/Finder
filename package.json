@@ -10,6 +10,7 @@
     "react": "16.2.0",
     "react-native": "0.52.2",
     "react-native-animatable": "^1.2.4",
+    "react-native-awesome-alerts": "^1.0.6",
     "react-native-firebase": "^3.2.4"
   },
   "devDependencies": {

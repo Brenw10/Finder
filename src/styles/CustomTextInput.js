@@ -16,5 +16,8 @@ export default StyleSheet.create({
         color: 'white',
         height: 42,
         padding: 7
+    },
+    textInputWrapperFocused: {
+        borderColor: 'white'
     }
 })
