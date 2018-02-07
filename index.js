@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import Login from './src/views/Login/Login';
+import StackNavigator from './src/views/Navigator/StackNavigator';
 
-AppRegistry.registerComponent('Finder', () => Login);
+AppRegistry.registerComponent('Finder', () => StackNavigator);

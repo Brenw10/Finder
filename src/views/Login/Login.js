@@ -6,6 +6,9 @@ import SignIn from 'Finder/src/views/Login/SignIn';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class Login extends Component {
+    static navigationOptions = {
+        title: 'Welcome',
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -36,14 +39,7 @@ export default class Login extends Component {
                 </View>
                 {this.renderLoginOptions()}
                 {this.renderSignIn()}
-                <AwesomeAlert title="Error"
-                    message="Something is wrong"
-                    show={this.state.isAlertEnabled}
-                    showConfirmButton={true}
-                    closeOnHardwareBackPress={true}
-                    confirmText="Ok"
-                    confirmButtonColor="#DD6B55"
-                    onConfirmPressed={() => this.toggleAlert(false)} />
+                {this.renderAlert()}
             </View>
         );
     }
@@ -61,6 +57,18 @@ export default class Login extends Component {
         return (
             <SignIn
                 toggleAlert={bool => this.toggleAlert(bool)} />
+        );
+    }
+    renderAlert() {
+        return (
+            <AwesomeAlert title="Error"
+                message="Something is wrong"
+                show={this.state.isAlertEnabled}
+                showConfirmButton={true}
+                closeOnHardwareBackPress={true}
+                confirmText="Ok"
+                confirmButtonColor="#DD6B55"
+                onConfirmPressed={() => this.toggleAlert(false)} />
         );
     }
 }
