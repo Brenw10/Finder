@@ -15,7 +15,8 @@ export default class SignIn extends Component {
         firebase
             .auth()
             .signInAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(console.log).catch(() => this.props.toggleAlert(true));
+            .then(console.log)
+            .catch(() => this.props.toggleAlert(true));
     }
     render() {
         return (
