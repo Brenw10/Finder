@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, Text } from 'react-native';
 import firebase from 'react-native-firebase';
+import styles from 'Finder/src/styles/CloserUsersList'
 
 export default class CloserUsersList extends Component {
     constructor(props) {
@@ -23,17 +24,30 @@ export default class CloserUsersList extends Component {
     render() {
         return (
             <View>
-                {this.renderUserList()}
+                {this.renderList()}
             </View>
         );
     }
-    renderUserList() {
-        if (!this.state.users) return;
+    renderList() {
+        if (!this.state.users) return;;
         return (
-            <ListView
+            <ListView style={styles.list}
                 dataSource={this.state.users}
-                renderRow={(row) => <Text>{row.profile.name}</Text>}
+                renderRow={row => this.renderListItem(row)}
+                renderSeparator={row => this.renderListItemSeparator(row)}
             />
+        );
+    }
+    renderListItem(props) {
+        return (
+            <Text style={styles.text}>
+                {props.profile.name}
+            </Text>
+        );
+    }
+    renderListItemSeparator() {
+        return (
+            <View style={styles.separator} />
         );
     }
 }

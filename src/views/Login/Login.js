@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, Image } from 'react-native';
 import styles from 'Finder/src/styles/Login';
-import LoginOptions from 'Finder/src/views/Login/LoginOptions';
-import SignIn from 'Finder/src/views/Login/SignIn';
+import LoginOptions from 'Finder/src/views/login/LoginOptions';
+import SignIn from 'Finder/src/views/login/SignIn';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class Login extends Component {
