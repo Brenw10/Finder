@@ -9,17 +9,14 @@ export default class CloserUsersList extends Component {
         this.state = {};
         this.fillCloserUsers();
     }
-    fillCloserUsers() {
-        this.getCloserUsers().then(users => {
-            const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-            this.setState({ users: dataSource.cloneWithRows(users.val()) });
-        });
+    async fillCloserUsers() {
+        const users = await this.getUserByDisctrict();
+        const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        const dataSourceValues = dataSource.cloneWithRows(users.val());
+        this.setState({ users: dataSourceValues });
     }
-    getCloserUsers() {
-        return firebase
-            .database()
-            .ref('users')
-            .once('value');
+    getUserByDisctrict() {
+        return firebase.database().ref('users').once('value');
     }
     render() {
         return (
@@ -29,25 +26,18 @@ export default class CloserUsersList extends Component {
         );
     }
     renderList() {
-        if (!this.state.users) return;;
+        if (!this.state.users) return;
         return (
             <ListView style={styles.list}
                 dataSource={this.state.users}
                 renderRow={row => this.renderListItem(row)}
-                renderSeparator={row => this.renderListItemSeparator(row)}
+                renderSeparator={row => <View style={styles.separator} />}
             />
         );
     }
     renderListItem(props) {
         return (
-            <Text style={styles.text}>
-                {props.profile.name}
-            </Text>
-        );
-    }
-    renderListItemSeparator() {
-        return (
-            <View style={styles.separator} />
+            <Text style={styles.text}>{props.profile.name}</Text>
         );
     }
 }
