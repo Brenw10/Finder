@@ -4,10 +4,12 @@ import styles from 'Finder/src/styles/Login';
 import LoginOptions from 'Finder/src/views/login/LoginOptions';
 import SignIn from 'Finder/src/views/login/SignIn';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import logo from 'Finder/src/images/logo.png';
 
 export default class Login extends Component {
     static navigationOptions = {
         title: 'Welcome',
+        header: null
     };
     constructor(props) {
         super(props);
@@ -33,10 +35,9 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.logo}
+                <View style={styles.logoContainer}
                     animation='bounceIn' duration={1200} delay={200}>
-                    <Image style={{ width: 150, height: 150 }}
-                        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png' }} />
+                    <Image style={styles.logo} source={logo} />
                 </View>
                 {this.renderLoginOptions()}
                 {this.renderSignIn()}
