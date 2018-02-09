@@ -17,6 +17,7 @@ export default class CustomTextInput extends Component {
                         placeholderTextColor='rgba(255,255,255,0.4)'
                         onChangeText={this.props.onChangeText}
                         secureTextEntry={this.props.secureTextEntry}
+                        value={this.props.value}
                         onFocus={() => this.setState({ isFocused: true })}
                         onBlur={() => this.setState({ isFocused: false })}
                     />

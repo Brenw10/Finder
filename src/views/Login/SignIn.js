@@ -11,6 +11,8 @@ export default class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: __DEV__ ? 'app@app.com' : null,
+            password: __DEV__ ? '123456' : null,
             isLoading: false
         };
     }
@@ -28,10 +30,11 @@ export default class SignIn extends Component {
                 <View style={styles.container} animation='slideInUp'>
                     <View style={styles.form}>
                         <View style={styles.margin}>
-                            <CustomTextInput placeholder='E-mail' onChangeText={email => this.setState({ email })} />
+                            <CustomTextInput placeholder='E-mail' value={this.state.email}
+                                onChangeText={email => this.setState({ email })} />
                         </View>
                         <View style={styles.margin}>
-                            <CustomTextInput placeholder='Password' secureTextEntry={true}
+                            <CustomTextInput placeholder='Password' secureTextEntry={true} value={this.state.password}
                                 onChangeText={password => this.setState({ password })} />
                         </View>
                         <View style={styles.margin} animation='bounceIn' duration={600} delay={400}>
