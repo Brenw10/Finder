@@ -12,6 +12,8 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
+    componentDidMount() {
         navigator.geolocation.watchPosition(position => this.setCurrentPosition(position));
     }
     getAddressByLatLong(latitude, longitude) {
@@ -29,10 +31,7 @@ export default class Home extends Component {
         const address = await this.getAddressByLatLong(position.coords.latitude, position.coords.longitude);
         const { formatted_address } = this.getDistrictFromAddress(address);
         position.district = formatted_address;
-        firebase
-            .database()
-            .ref(`users/${uid}/position`)
-            .set(position);
+        firebase.database().ref(`users/${uid}/position`).set(position);
     }
     render() {
         return (
