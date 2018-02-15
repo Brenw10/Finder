@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, Text } from 'react-native';
+import { View, ListView, Text, RefreshControl } from 'react-native';
 import firebase from 'react-native-firebase';
 import styles from 'Finder/src/styles/CloserUsersList';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -9,14 +9,18 @@ export default class CloserUsersList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            isRefreshing: false
         };
     }
     componentDidMount() {
         this.fillCloserUsers();
     }
+    refresh() {
+        this.fillCloserUsers();
+    }
     async fillCloserUsers() {
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, isRefreshing: true });
         const currentUser = await auth.getCurrentUser();
 
         const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
@@ -25,7 +29,7 @@ export default class CloserUsersList extends Component {
         const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
         const dataSourceValues = dataSource.cloneWithRows(view);
 
-        this.setState({ users: dataSourceValues, isLoading: false });
+        this.setState({ users: dataSourceValues, isLoading: false, isRefreshing: false });
     }
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
@@ -61,7 +65,7 @@ export default class CloserUsersList extends Component {
     }
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 {this.renderList()}
                 <Spinner visible={this.state.isLoading} />
             </View>
@@ -71,6 +75,12 @@ export default class CloserUsersList extends Component {
         if (!this.state.users) return;
         return (
             <ListView style={styles.list}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={() => this.refresh()}
+                    />
+                }
                 dataSource={this.state.users}
                 renderRow={row => this.renderListItem(row)}
                 renderSeparator={row => <View style={styles.separator} />}

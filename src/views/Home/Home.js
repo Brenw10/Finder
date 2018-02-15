@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
 import keys from 'Finder/src/config/keys';
+import styles from 'Finder/src/styles/Home';
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -37,7 +38,7 @@ export default class Home extends Component {
     }
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <CloserUsersList />
             </View>
         );
