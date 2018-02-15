@@ -3,6 +3,7 @@ import { Text, View, Image } from 'react-native';
 import styles from 'Finder/src/styles/Login';
 import LoginOptions from 'Finder/src/views/login/LoginOptions';
 import SignIn from 'Finder/src/views/login/SignIn';
+import SignUp from 'Finder/src/views/login/SignUp';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import logo from 'Finder/src/images/logo.png';
 
@@ -41,12 +42,13 @@ export default class Login extends Component {
                 </View>
                 {this.renderLoginOptions()}
                 {this.renderSignIn()}
+                {this.renderSignUp()}
                 {this.renderAlert()}
             </View>
         );
     }
     renderLoginOptions() {
-        if (this.state.selectedView !== this.state.views['LOGIN_OPTIONS']) return;
+        if (this.state.selectedView !== this.state.views.LOGIN_OPTIONS) return;
         return (
             <LoginOptions
                 register={() => this.loadRegister()}
@@ -55,9 +57,17 @@ export default class Login extends Component {
         );
     }
     renderSignIn() {
-        if (this.state.selectedView !== this.state.views['SIGN_IN']) return;
+        if (this.state.selectedView !== this.state.views.SIGN_IN) return;
         return (
             <SignIn
+                success={() => this.props.navigation.navigate('Home')}
+                toggleAlert={bool => this.toggleAlert(bool)} />
+        );
+    }
+    renderSignUp() {
+        if (this.state.selectedView !== this.state.views.SIGN_UP) return;
+        return (
+            <SignUp
                 success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
