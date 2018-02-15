@@ -18,15 +18,46 @@ export default class CloserUsersList extends Component {
     async fillCloserUsers() {
         this.setState({ isLoading: true });
         const currentUser = await auth.getCurrentUser();
-        const users = await this.getUserByDisctrict(currentUser.position.district);
+
         const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
-        const dataSourceValues = dataSource.cloneWithRows(users);
+
+        const users = await this.getUserByDisctrict(currentUser.position.district);
+        const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
+        const dataSourceValues = dataSource.cloneWithRows(view);
+
         this.setState({ users: dataSourceValues, isLoading: false });
     }
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
         const query = usersRef.orderByChild('position/district').equalTo(district);
-        return query.once('value').then(result => result.val());
+        return query.once('value').then(data => Object.values(data.val()));
+    }
+    setUsersDistance(currentUser, users) {
+        const currentUserLat = currentUser.position.coords.latitude;
+        const currentUserLong = currentUser.position.coords.longitude;
+        return users.map(user => Object.assign(user,
+            {
+                distanceKm:
+                    this.getDistanceFromLatLonInKm(currentUserLat, currentUserLong, user.position.coords.latitude, user.position.coords.longitude)
+            }
+        ));
+    }
+    sortUsersByDistance(users) {
+        return users.sort((a, b) => a.distanceKm - b.distanceKm);
+    }
+    getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
+        var dLon = this.deg2rad(lon2 - lon1);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c; // Distance in km
+        return d;
+    }
+    deg2rad(deg) {
+        return deg * (Math.PI / 180)
     }
     render() {
         return (
@@ -48,7 +79,7 @@ export default class CloserUsersList extends Component {
     }
     renderListItem(props) {
         return (
-            <Text style={styles.text}>{props.profile.name}</Text>
+            <Text style={styles.text}>{props.profile.name} - {(props.distanceKm * 1000).toFixed(2)}M</Text>
         );
     }
 }
