@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
 import keys from 'Finder/src/config/keys';
@@ -12,10 +12,16 @@ export default class Home extends Component {
     };
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isLoading: false
+        };
     }
     componentDidMount() {
-        navigator.geolocation.watchPosition(position => this.setCurrentPosition(position));
+        navigator.geolocation.watchPosition(
+            position => this.setCurrentPosition(position),
+            console.log,
+            { enableHighAccuracy: true, timeout: 100, maximumAge: 0, distanceFilter: 1 }
+        );
     }
     getAddressesByLatLong(latitude, longitude) {
         const { MAPS_API_KEY } = keys;
@@ -23,23 +29,31 @@ export default class Home extends Component {
         return fetch(url).then(data => data.json()).then(data => data.results);
     }
     getDistrictFromAddress(addresses) {
-        return addresses.find(address =>
-            address.types.includes('postal_code') &&
-            address.types.includes('postal_code_prefix') &&
-            address.types.length === 2
-        );
+        const components = addresses[0].address_components;
+        return components.find(address => address.types.includes('sublocality_level_1'));
     }
     async setCurrentPosition(position) {
+        this.setState({ isLoading: true });
         const uid = firebase.auth().currentUser.uid;
         const addresses = await this.getAddressesByLatLong(position.coords.latitude, position.coords.longitude);
-        const { formatted_address } = this.getDistrictFromAddress(addresses);
-        position.district = formatted_address;
-        firebase.database().ref(`users/${uid}/position`).set(position);
+        const { long_name } = this.getDistrictFromAddress(addresses);
+        position.district = long_name;
+        await firebase.database().ref(`users/${uid}/position`).set(position);
+        this.setState({ isLoading: false });
     }
     render() {
         return (
             <View style={styles.container}>
                 <CloserUsersList />
+                {this.renderLoading()}
+            </View>
+        );
+    }
+    renderLoading() {
+        return (
+            <View>
+                <Text>{this.state.isLoading ? 'Loading' : 'Done'}</Text>
+                <Text>lat={this.state.latitude}, long={this.state.longitude}</Text>
             </View>
         );
     }

@@ -11,8 +11,8 @@ export default class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: __DEV__ ? 'User' : null,
-            email: __DEV__ ? 'user@user.com' : null,
+            name: __DEV__ ? 'App' : null,
+            email: __DEV__ ? 'app@app.com' : null,
             password: __DEV__ ? '123456' : null,
             confirmPassword: __DEV__ ? '123456' : null,
             isLoading: false
