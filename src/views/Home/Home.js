@@ -9,7 +9,7 @@ export default class Home extends Component {
     static navigationOptions = {
         title: 'Home',
         headerLeft: null
-    };
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,7 @@ export default class Home extends Component {
         navigator.geolocation.watchPosition(
             position => this.setCurrentPosition(position),
             console.log,
-            { enableHighAccuracy: true, timeout: 100, maximumAge: 0, distanceFilter: 1 }
+            { enableHighAccuracy: true, timeout: 0, maximumAge: 0, distanceFilter: 0 }
         );
     }
     getAddressesByLatLong(latitude, longitude) {
@@ -45,15 +45,7 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <CloserUsersList />
-                {this.renderLoading()}
-            </View>
-        );
-    }
-    renderLoading() {
-        return (
-            <View>
                 <Text>{this.state.isLoading ? 'Loading' : 'Done'}</Text>
-                <Text>lat={this.state.latitude}, long={this.state.longitude}</Text>
             </View>
         );
     }
