@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { View, ListView, Text, RefreshControl } from 'react-native';
 import firebase from 'react-native-firebase';
 import styles from 'Finder/src/styles/CloserUsersList';
-import Spinner from 'react-native-loading-spinner-overlay';
 import auth from 'Finder/src/services/auth';
+import geolocation from 'Finder/src/services/geolocation';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class CloserUsersList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
-            isRefreshing: false
+            isRefreshing: false,
+            isLoading: false
         };
     }
     componentDidMount() {
@@ -20,16 +21,21 @@ export default class CloserUsersList extends Component {
         this.fillCloserUsers();
     }
     async fillCloserUsers() {
-        this.setState({ isLoading: true, isRefreshing: true });
-        const currentUser = await auth.getCurrentUser();
-
         const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
+        try {
+            this.setState({ isRefreshing: true, isLoading: true });
+            const currentUser = await auth.getCurrentUser();
 
-        const users = await this.getUserByDisctrict(currentUser.position.district);
-        const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
-        const dataSourceValues = dataSource.cloneWithRows(view);
+            const users = await this.getUserByDisctrict(currentUser.position.district);
+            const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
+            const dataSourceValues = dataSource.cloneWithRows(view);
 
-        this.setState({ users: dataSourceValues, isLoading: false, isRefreshing: false });
+            this.setState({ users: dataSourceValues, isRefreshing: false, isLoading: false });
+        } catch (ex) {
+            const message = 'There is no closer users. Get out of the jungle :p';
+            const dataSourceValues = dataSource.cloneWithRows([message]);
+            this.setState({ users: dataSourceValues, isRefreshing: false, isLoading: false });
+        }
     }
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
@@ -39,29 +45,15 @@ export default class CloserUsersList extends Component {
     setUsersDistance(currentUser, users) {
         const currentUserLat = currentUser.position.coords.latitude;
         const currentUserLong = currentUser.position.coords.longitude;
-        return users.map(user => Object.assign(user,
-            {
-                distanceKm:
-                    this.getDistanceFromLatLonInKm(currentUserLat, currentUserLong, user.position.coords.latitude, user.position.coords.longitude)
-            }
-        ));
+        return users.map(user => {
+            const userLatitude = user.position.coords.latitude;
+            const userLongitude = user.position.coords.longitude;
+            const distanceKm = geolocation.getDistanceFromLatLonInKm(currentUserLat, currentUserLong, userLatitude, userLongitude);
+            return Object.assign(user, { distanceKm });
+        });
     }
     sortUsersByDistance(users) {
         return users.sort((a, b) => a.distanceKm - b.distanceKm);
-    }
-    getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-        var R = 6371; // Radius of the earth in km
-        var dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
-        var dLon = this.deg2rad(lon2 - lon1);
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c; // Distance in km
-        return d;
-    }
-    deg2rad(deg) {
-        return deg * (Math.PI / 180)
     }
     render() {
         return (
@@ -88,8 +80,9 @@ export default class CloserUsersList extends Component {
         );
     }
     renderListItem(props) {
-        return (
-            <Text style={styles.text}>{props.profile.name} - {(props.distanceKm * 1000).toFixed(2)}M</Text>
-        );
+        if (typeof props === 'string')
+            return <Text style={styles.text}>{props}</Text>;
+        else
+            return <Text style={styles.text}>{props.profile.name} - {(props.distanceKm * 1000).toFixed(2)}M</Text>;
     }
 }

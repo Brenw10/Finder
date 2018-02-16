@@ -9,8 +9,7 @@ import logo from 'Finder/src/images/logo.png';
 
 export default class Login extends Component {
     static navigationOptions = {
-        title: 'Welcome',
-        header: null
+        title: 'Welcome'
     };
     constructor(props) {
         super(props);
