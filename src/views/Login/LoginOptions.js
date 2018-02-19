@@ -3,8 +3,13 @@ import { Text } from 'react-native';
 import styles from 'Finder/src/styles/LoginOptions';
 import CustomButton from 'Finder/src/components/CustomButton';
 import { View } from 'react-native-animatable';
+import PropTypes from 'prop-types';
 
 export default class LoginOptions extends Component {
+    static propTypes = {
+        register: PropTypes.func.isRequired,
+        login: PropTypes.func.isRequired
+    }
     render() {
         return (
             <View style={styles.container}>

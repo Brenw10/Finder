@@ -6,8 +6,14 @@ import CustomButton from 'Finder/src/components/CustomButton';
 import { View, Text } from 'react-native-animatable';
 import firebase from 'react-native-firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
+import PropTypes from 'prop-types';
 
 export default class SignUp extends Component {
+    static propTypes = {
+        back: PropTypes.func.isRequired,
+        success: PropTypes.func.isRequired,
+        toggleAlert: PropTypes.func.isRequired
+    }
     constructor(props) {
         super(props);
         this.state = {
