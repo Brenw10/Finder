@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 export default class SignUp extends Component {
     static propTypes = {
-        back: PropTypes.func.isRequired,
+        loadLogin: PropTypes.func.isRequired,
         success: PropTypes.func.isRequired,
         toggleAlert: PropTypes.func.isRequired
     }
@@ -49,7 +49,7 @@ export default class SignUp extends Component {
     render() {
         return (
             <KeyboardAvoidingView behavior='padding'>
-                <View style={styles.container} animation='slideInUp'>
+                <View style={styles.container}>
                     <View style={styles.form}>
                         <View style={styles.margin}>
                             <CustomTextInput placeholder='Your Name' value={this.state.name}
@@ -68,7 +68,7 @@ export default class SignUp extends Component {
                                 onChangeText={confirmPassword => this.setState({ confirmPassword })} />
                         </View>
                         {this.renderSignUpButton()}
-                        <Text style={styles.loginLink} onPress={() => this.props.back()}
+                        <Text style={styles.loginLink} onPress={() => this.props.loadLogin()}
                             animation='fadeIn' duration={600} delay={400}>Already have an account?</Text>
                     </View>
                     <Spinner visible={this.state.isLoading} />

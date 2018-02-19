@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 export default class SignIn extends Component {
     static propTypes = {
-        back: PropTypes.func.isRequired,
+        loadRegister: PropTypes.func.isRequired,
         success: PropTypes.func.isRequired,
         toggleAlert: PropTypes.func.isRequired
     }
@@ -33,7 +33,7 @@ export default class SignIn extends Component {
     render() {
         return (
             <KeyboardAvoidingView behavior='padding'>
-                <View style={styles.container} animation='slideInUp'>
+                <View style={styles.container}>
                     <View style={styles.form}>
                         <View style={styles.margin}>
                             <CustomTextInput placeholder='E-mail' value={this.state.email}
@@ -50,7 +50,7 @@ export default class SignIn extends Component {
                                 textStyle={styles.loginButtonText}
                             />
                         </View>
-                        <Text style={styles.loginLink} onPress={() => this.props.back()}
+                        <Text style={styles.loginLink} onPress={() => this.props.loadRegister()}
                             animation='fadeIn' duration={600} delay={400}>Not registered yet?</Text>
                     </View>
                     <Spinner visible={this.state.isLoading} />

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, LayoutAnimation } from 'react-native';
 import styles from 'Finder/src/styles/Login';
 import LoginOptions from 'Finder/src/views/login/LoginOptions';
 import SignIn from 'Finder/src/views/login/SignIn';
 import SignUp from 'Finder/src/views/login/SignUp';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { Image } from 'react-native-animatable';
 import logo from 'Finder/src/images/logo.png';
 
 export default class Login extends Component {
@@ -24,13 +25,12 @@ export default class Login extends Component {
         this.state.selectedView = this.state.views.LOGIN_OPTIONS;
     }
     loadRegister() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         this.setState({ selectedView: this.state.views.SIGN_UP });
     }
     loadLogin() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         this.setState({ selectedView: this.state.views.SIGN_IN });
-    }
-    loadLoginOptions() {
-        this.setState({ selectedView: this.state.views.LOGIN_OPTIONS });
     }
     toggleAlert(bool) {
         this.setState({ isAlertEnabled: bool });
@@ -38,9 +38,9 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.logoContainer}
-                    animation='bounceIn' duration={1200} delay={200}>
-                    <Image style={styles.logo} source={logo} />
+                <View style={styles.logoContainer}>
+                    <Image style={styles.logo} source={logo}
+                        animation='bounceIn' duration={1200} delay={200} />
                 </View>
                 {this.renderLoginOptions()}
                 {this.renderSignIn()}
@@ -62,7 +62,7 @@ export default class Login extends Component {
         if (this.state.selectedView !== this.state.views.SIGN_IN) return;
         return (
             <SignIn
-                back={() => this.loadLoginOptions()}
+                loadRegister={() => this.loadRegister()}
                 success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
@@ -71,7 +71,7 @@ export default class Login extends Component {
         if (this.state.selectedView !== this.state.views.SIGN_UP) return;
         return (
             <SignUp
-                back={() => this.loadLoginOptions()}
+                loadLogin={() => this.loadLogin()}
                 success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
