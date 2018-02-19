@@ -24,7 +24,7 @@ export default class LoginOptions extends Component {
                 </View>
                 <View animation='zoomIn' delay={800} duration={400}>
                     <CustomButton buttonStyle={styles.loginButton}
-                        text='Sign in' onPress={() => this.props.login()} />
+                        text='Sign In' onPress={() => this.props.login()} />
                 </View>
             </View>
         );
