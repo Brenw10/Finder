@@ -1,9 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container: {
-        backgroundColor: '#1976D2'
-    },
     form: {
         marginHorizontal: 30,
         marginVertical: 10

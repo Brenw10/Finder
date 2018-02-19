@@ -13,5 +13,8 @@ export default StyleSheet.create({
         resizeMode: 'contain',
         width: 120,
         height: 120
+    },
+    bottomContainer: {
+        backgroundColor: '#1976D2'
     }
 })

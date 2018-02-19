@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, LayoutAnimation } from 'react-native';
+import { Text, View, LayoutAnimation, KeyboardAvoidingView } from 'react-native';
 import styles from 'Finder/src/styles/Login';
 import LoginOptions from 'Finder/src/views/login/LoginOptions';
 import SignIn from 'Finder/src/views/login/SignIn';
@@ -43,8 +43,10 @@ export default class Login extends Component {
                         animation='bounceIn' duration={1200} delay={200} />
                 </View>
                 {this.renderLoginOptions()}
-                {this.renderSignIn()}
-                {this.renderSignUp()}
+                <KeyboardAvoidingView behavior='padding' style={styles.bottomContainer}>
+                    {this.renderSignIn()}
+                    {this.renderSignUp()}
+                </KeyboardAvoidingView>
                 {this.renderAlert()}
             </View>
         );

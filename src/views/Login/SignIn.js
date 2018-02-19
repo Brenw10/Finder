@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { View } from 'react-native';
 import styles from 'Finder/src/styles/SignIn';
 import CustomTextInput from 'Finder/src/components/CustomTextInput';
 import CustomButton from 'Finder/src/components/CustomButton';
-import { View, Text } from 'react-native-animatable';
+import { Text } from 'react-native-animatable';
 import firebase from 'react-native-firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
 import PropTypes from 'prop-types';
@@ -32,7 +32,7 @@ export default class SignIn extends Component {
     }
     render() {
         return (
-            <KeyboardAvoidingView behavior='padding' style={styles.container}>
+            <View>
                 <View style={styles.form}>
                     <View style={styles.margin}>
                         <CustomTextInput placeholder='E-mail' value={this.state.email}
@@ -53,7 +53,7 @@ export default class SignIn extends Component {
                         animation='fadeIn' duration={600} delay={400}>Not registered yet?</Text>
                 </View>
                 <Spinner visible={this.state.isLoading} />
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
