@@ -32,29 +32,27 @@ export default class SignIn extends Component {
     }
     render() {
         return (
-            <KeyboardAvoidingView behavior='padding'>
-                <View style={styles.container}>
-                    <View style={styles.form}>
-                        <View style={styles.margin}>
-                            <CustomTextInput placeholder='E-mail' value={this.state.email}
-                                onChangeText={email => this.setState({ email })} />
-                        </View>
-                        <View style={styles.margin}>
-                            <CustomTextInput placeholder='Password' secureTextEntry={true} value={this.state.password}
-                                onChangeText={password => this.setState({ password })} />
-                        </View>
-                        <View style={styles.margin} animation='bounceIn' duration={600} delay={400}>
-                            <CustomButton text='Log In'
-                                onPress={() => this.login(this.state.email, this.state.password)}
-                                buttonStyle={styles.loginButton}
-                                textStyle={styles.loginButtonText}
-                            />
-                        </View>
-                        <Text style={styles.loginLink} onPress={() => this.props.loadRegister()}
-                            animation='fadeIn' duration={600} delay={400}>Not registered yet?</Text>
+            <KeyboardAvoidingView behavior='padding' style={styles.container}>
+                <View style={styles.form}>
+                    <View style={styles.margin}>
+                        <CustomTextInput placeholder='E-mail' value={this.state.email}
+                            onChangeText={email => this.setState({ email })} />
                     </View>
-                    <Spinner visible={this.state.isLoading} />
+                    <View style={styles.margin}>
+                        <CustomTextInput placeholder='Password' secureTextEntry={true} value={this.state.password}
+                            onChangeText={password => this.setState({ password })} />
+                    </View>
+                    <View style={styles.margin} animation='bounceIn' duration={600} delay={400}>
+                        <CustomButton text='Log In'
+                            onPress={() => this.login(this.state.email, this.state.password)}
+                            buttonStyle={styles.loginButton}
+                            textStyle={styles.loginButtonText}
+                        />
+                    </View>
+                    <Text style={styles.loginLink} onPress={() => this.props.loadRegister()}
+                        animation='fadeIn' duration={600} delay={400}>Not registered yet?</Text>
                 </View>
+                <Spinner visible={this.state.isLoading} />
             </KeyboardAvoidingView>
         );
     }

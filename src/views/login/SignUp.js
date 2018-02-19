@@ -48,29 +48,27 @@ export default class SignUp extends Component {
     }
     render() {
         return (
-            <KeyboardAvoidingView behavior='padding'>
-                <View style={styles.container}>
-                    <View style={styles.form}>
-                        <View style={styles.margin}>
-                            <CustomTextInput placeholder='Your Name' value={this.state.name}
-                                onChangeText={name => this.setState({ name })} />
-                        </View>
-                        <View style={styles.margin}>
-                            <CustomTextInput placeholder='E-mail' value={this.state.email}
-                                onChangeText={email => this.setState({ email })} />
-                        </View>
-                        <View style={styles.margin}>
-                            <CustomTextInput placeholder='Password' secureTextEntry={true} value={this.state.password}
-                                onChangeText={password => this.setState({ password })} />
-                        </View>
-                        <View style={styles.margin}>
-                            <CustomTextInput placeholder='Confirm Password' secureTextEntry={true} value={this.state.confirmPassword}
-                                onChangeText={confirmPassword => this.setState({ confirmPassword })} />
-                        </View>
-                        {this.renderSignUpButton()}
-                        <Text style={styles.loginLink} onPress={() => this.props.loadLogin()}
-                            animation='fadeIn' duration={600} delay={400}>Already have an account?</Text>
+            <KeyboardAvoidingView behavior='padding' style={styles.container}>
+                <View style={styles.form}>
+                    <View style={styles.margin}>
+                        <CustomTextInput placeholder='Your Name' value={this.state.name}
+                            onChangeText={name => this.setState({ name })} />
                     </View>
+                    <View style={styles.margin}>
+                        <CustomTextInput placeholder='E-mail' value={this.state.email}
+                            onChangeText={email => this.setState({ email })} />
+                    </View>
+                    <View style={styles.margin}>
+                        <CustomTextInput placeholder='Password' secureTextEntry={true} value={this.state.password}
+                            onChangeText={password => this.setState({ password })} />
+                    </View>
+                    <View style={styles.margin}>
+                        <CustomTextInput placeholder='Confirm Password' secureTextEntry={true} value={this.state.confirmPassword}
+                            onChangeText={confirmPassword => this.setState({ confirmPassword })} />
+                    </View>
+                    {this.renderSignUpButton()}
+                    <Text style={styles.loginLink} onPress={() => this.props.loadLogin()}
+                        animation='fadeIn' duration={600} delay={400}>Already have an account?</Text>
                     <Spinner visible={this.state.isLoading} />
                 </View>
             </KeyboardAvoidingView>
