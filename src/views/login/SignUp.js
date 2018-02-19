@@ -70,23 +70,17 @@ export default class SignUp extends Component {
                         <CustomTextInput placeholder='Confirm Password' secureTextEntry={true} value={this.state.confirmPassword}
                             onChangeText={confirmPassword => this.setState({ confirmPassword })} />
                     </View>
-                    {this.renderSignUpButton()}
+                    <View style={styles.margin} ref={ref => this.submitRef = ref} animation='bounceIn' duration={600} delay={400}>
+                        <CustomButton text='Sign Up' disabled={!this.isValidUser()}
+                            onPress={() => this.register(this.state.name, this.state.email, this.state.password)}
+                            buttonStyle={styles.registerButton}
+                            textStyle={styles.registerButtonText}
+                        />
+                    </View>
                     <Text style={styles.loginLink} onPress={() => this.loadLogin()}
                         animation='fadeIn' duration={600} delay={400}>Already have an account?</Text>
                     <Spinner visible={this.state.isLoading} />
                 </View>
-            </View>
-        );
-    }
-    renderSignUpButton() {
-        if (!this.isValidUser()) return;
-        return (
-            <View style={styles.margin} ref={ref => this.submitRef = ref} animation='bounceIn' duration={600} delay={400}>
-                <CustomButton text='Sign Up'
-                    onPress={() => this.register(this.state.name, this.state.email, this.state.password)}
-                    buttonStyle={styles.registerButton}
-                    textStyle={styles.registerButtonText}
-                />
             </View>
         );
     }

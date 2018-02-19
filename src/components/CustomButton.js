@@ -5,9 +5,12 @@ import styles from 'Finder/src/styles/CustomButton';
 export default class CustomButton extends Component {
     render() {
         return (
-            <TouchableHighlight style={[styles.button, this.props.buttonStyle]}
-                onPress={this.props.onPress}>
-                <Text style={[styles.text, this.props.textStyle]}>{this.props.text}</Text>
+            <TouchableHighlight underlayColor={this.props.disabled ? 'rgba(255, 255, 255, 0.3)' : null}
+                style={[styles.button, this.props.buttonStyle, this.props.disabled ? styles.disabledButton : null]}
+                onPress={() => this.props.disabled ? null : this.props.onPress()}>
+                <Text
+                    style={[styles.text, this.props.textStyle, this.props.disabled ? styles.disabledText : null]}>
+                    {this.props.text}</Text>
             </TouchableHighlight>
         );
     }
