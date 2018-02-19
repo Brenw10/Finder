@@ -8,7 +8,8 @@ import geolocation from 'Finder/src/services/geolocation';
 export default class Home extends Component {
     static navigationOptions = {
         title: 'Home',
-        headerLeft: null
+        headerLeft: null,
+        gesturesEnabled: false,
     }
     constructor(props) {
         super(props);
