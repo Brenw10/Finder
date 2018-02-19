@@ -18,10 +18,7 @@ export default class Home extends Component {
     }
     componentDidMount() {
         navigator.geolocation.watchPosition(
-            position => {
-                this.state.lastChange = new Date();
-                this.setCurrentPosition(position);
-            },
+            position => this.setCurrentPosition(position),
             console.log,
             { enableHighAccuracy: true, timeout: 0, maximumAge: 0, distanceFilter: 1 }
         );
@@ -48,9 +45,9 @@ export default class Home extends Component {
         );
     }
     renderUpdatedAtFooter() {
-        if (!this.state.lastChange || this.state.isLoading)
+        if (this.state.isLoading)
             return <Text>Loading</Text>;
         else
-            return <Text>Updated at {this.state.lastChange.toLocaleTimeString()}</Text>;
+            return <Text>Done</Text>;
     }
 }
