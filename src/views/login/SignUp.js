@@ -45,9 +45,14 @@ export default class SignUp extends Component {
         this.setState({ isLoading: false });
         this.props.toggleAlert(true);
     }
+    async loadLogin() {
+        await this.submitRef.zoomOut(200);
+        await this.containerRef.fadeOut(300);
+        this.props.loadLogin();
+    }
     render() {
         return (
-            <View>
+            <View ref={ref => this.containerRef = ref}>
                 <View style={styles.form}>
                     <View style={styles.margin}>
                         <CustomTextInput placeholder='Your Name' value={this.state.name}
@@ -66,7 +71,7 @@ export default class SignUp extends Component {
                             onChangeText={confirmPassword => this.setState({ confirmPassword })} />
                     </View>
                     {this.renderSignUpButton()}
-                    <Text style={styles.loginLink} onPress={() => this.props.loadLogin()}
+                    <Text style={styles.loginLink} onPress={() => this.loadLogin()}
                         animation='fadeIn' duration={600} delay={400}>Already have an account?</Text>
                     <Spinner visible={this.state.isLoading} />
                 </View>
@@ -76,7 +81,7 @@ export default class SignUp extends Component {
     renderSignUpButton() {
         if (!this.isValidUser()) return;
         return (
-            <View style={styles.margin} animation='bounceIn' duration={600} delay={400}>
+            <View style={styles.margin} ref={ref => this.submitRef = ref} animation='bounceIn' duration={600} delay={400}>
                 <CustomButton text='Sign Up'
                     onPress={() => this.register(this.state.name, this.state.email, this.state.password)}
                     buttonStyle={styles.registerButton}

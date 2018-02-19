@@ -29,9 +29,14 @@ export default class SignIn extends Component {
             .then(() => { this.setState({ isLoading: false }); this.props.success(); })
             .catch(() => { this.setState({ isLoading: false }); this.props.toggleAlert(true); });
     }
+    async loadRegister() {
+        await this.submitRef.zoomOut(200);
+        await this.containerRef.fadeOut(300);
+        this.props.loadRegister();
+    }
     render() {
         return (
-            <View>
+            <View ref={ref => this.containerRef = ref}>
                 <View style={styles.form}>
                     <View style={styles.margin}>
                         <CustomTextInput placeholder='E-mail' value={this.state.email}
@@ -41,14 +46,14 @@ export default class SignIn extends Component {
                         <CustomTextInput placeholder='Password' secureTextEntry={true} value={this.state.password}
                             onChangeText={password => this.setState({ password })} />
                     </View>
-                    <View style={styles.margin} animation='bounceIn' duration={600} delay={400}>
+                    <View style={styles.margin} ref={ref => this.submitRef = ref} animation='bounceIn' duration={600} delay={400}>
                         <CustomButton text='Log In'
                             onPress={() => this.login(this.state.email, this.state.password)}
                             buttonStyle={styles.loginButton}
                             textStyle={styles.loginButtonText}
                         />
                     </View>
-                    <Text style={styles.loginLink} onPress={() => this.props.loadRegister()}
+                    <Text style={styles.loginLink} onPress={() => this.loadRegister()}
                         animation='fadeIn' duration={600} delay={400}>Not registered yet?</Text>
                 </View>
                 <Spinner visible={this.state.isLoading} />
