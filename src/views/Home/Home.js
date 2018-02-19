@@ -41,11 +41,11 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <CloserUsersList />
-                {this.renderUpdatedAtFooter()}
+                {this.renderLoadingFooter()}
             </View>
         );
     }
-    renderUpdatedAtFooter() {
+    renderLoadingFooter() {
         if (this.state.isLoading)
             return <Text>Loading</Text>;
         else
