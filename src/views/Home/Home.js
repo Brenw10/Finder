@@ -23,7 +23,7 @@ export default class Home extends Component {
                 this.setCurrentPosition(position);
             },
             console.log,
-            { enableHighAccuracy: true, timeout: 0, maximumAge: 0, distanceFilter: 0 }
+            { enableHighAccuracy: true, timeout: 0, maximumAge: 0, distanceFilter: 1 }
         );
     }
     getAddressesByLatLong(latitude, longitude) {

@@ -5,7 +5,8 @@ export default StyleSheet.create({
         backgroundColor: '#1976D2'
     },
     form: {
-        margin: 30
+        marginHorizontal: 30,
+        marginVertical: 10
     },
     loginButton: {
         backgroundColor: 'white'
@@ -16,5 +17,10 @@ export default StyleSheet.create({
     },
     margin: {
         marginTop: 20
+    },
+    loginLink: {
+        color: 'rgba(255,255,255,0.6)',
+        alignSelf: 'center',
+        padding: 20
     }
 })

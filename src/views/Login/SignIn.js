@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import styles from 'Finder/src/styles/SignIn';
 import CustomTextInput from 'Finder/src/components/CustomTextInput';
 import CustomButton from 'Finder/src/components/CustomButton';
-import { View } from 'react-native-animatable';
+import { View, Text } from 'react-native-animatable';
 import firebase from 'react-native-firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -44,6 +44,8 @@ export default class SignIn extends Component {
                                 textStyle={styles.loginButtonText}
                             />
                         </View>
+                        <Text style={styles.loginLink} onPress={() => this.props.back()}
+                            animation='fadeIn' duration={600} delay={400}>Not registered yet?</Text>
                     </View>
                     <Spinner visible={this.state.isLoading} />
                 </View>

@@ -29,6 +29,9 @@ export default class Login extends Component {
     loadLogin() {
         this.setState({ selectedView: this.state.views.SIGN_IN });
     }
+    loadLoginOptions() {
+        this.setState({ selectedView: this.state.views.LOGIN_OPTIONS });
+    }
     toggleAlert(bool) {
         this.setState({ isAlertEnabled: bool });
     }
@@ -59,6 +62,7 @@ export default class Login extends Component {
         if (this.state.selectedView !== this.state.views.SIGN_IN) return;
         return (
             <SignIn
+                back={() => this.loadLoginOptions()}
                 success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
@@ -67,6 +71,7 @@ export default class Login extends Component {
         if (this.state.selectedView !== this.state.views.SIGN_UP) return;
         return (
             <SignUp
+                back={() => this.loadLoginOptions()}
                 success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
