@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import styles from 'Finder/src/styles/SignUp';
 import CustomTextInput from 'Finder/src/components/CustomTextInput';
 import CustomButton from 'Finder/src/components/CustomButton';
-import { Text } from 'react-native-animatable';
+import { Text, View } from 'react-native-animatable';
 import firebase from 'react-native-firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
 import PropTypes from 'prop-types';
