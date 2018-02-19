@@ -78,8 +78,8 @@ export default class Login extends Component {
     }
     renderAlert() {
         return (
-            <AwesomeAlert title="Error"
-                message="Something is wrong"
+            <AwesomeAlert title="An error has occurred"
+                message="Some information is not correct. Please rewrite and try again."
                 show={this.state.isAlertEnabled}
                 showConfirmButton={true}
                 closeOnHardwareBackPress={true}
