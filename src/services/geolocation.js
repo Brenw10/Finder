@@ -1,3 +1,5 @@
+import keys from 'Finder/src/config/keys';
+
 export default {
     getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
         var R = 6371; // Radius of the earth in km
@@ -12,5 +14,10 @@ export default {
     },
     deg2rad(deg) {
         return deg * (Math.PI / 180)
+    },
+    getAddressesByLatLong(latitude, longitude) {
+        const { MAPS_API_KEY } = keys;
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAPS_API_KEY}`;
+        return fetch(url).then(data => data.json()).then(data => data.results);
     }
 }

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
-import keys from 'Finder/src/config/keys';
 import styles from 'Finder/src/styles/Home';
+import geolocation from 'Finder/src/services/geolocation';
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -26,11 +26,6 @@ export default class Home extends Component {
             { enableHighAccuracy: true, timeout: 0, maximumAge: 0, distanceFilter: 1 }
         );
     }
-    getAddressesByLatLong(latitude, longitude) {
-        const { MAPS_API_KEY } = keys;
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAPS_API_KEY}`;
-        return fetch(url).then(data => data.json()).then(data => data.results);
-    }
     getDistrictFromAddress(addresses) {
         const components = addresses[0].address_components;
         return components.find(address => address.types.includes('sublocality_level_1'));
@@ -38,7 +33,7 @@ export default class Home extends Component {
     async setCurrentPosition(position) {
         this.setState({ isLoading: true });
         const uid = firebase.auth().currentUser.uid;
-        const addresses = await this.getAddressesByLatLong(position.coords.latitude, position.coords.longitude);
+        const addresses = await geolocation.getAddressesByLatLong(position.coords.latitude, position.coords.longitude);
         const { long_name } = this.getDistrictFromAddress(addresses);
         position.district = long_name;
         await firebase.database().ref(`users/${uid}/position`).set(position);
