@@ -13,9 +13,7 @@ export default class Home extends Component {
     }
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false
-        };
+        this.state = {};
     }
     componentDidMount() {
         navigator.geolocation.watchPosition(
@@ -29,26 +27,17 @@ export default class Home extends Component {
         return components.find(address => address.types.includes('sublocality_level_1'));
     }
     async setCurrentPosition(position) {
-        this.setState({ isLoading: true });
         const uid = firebase.auth().currentUser.uid;
         const addresses = await geolocation.getAddressesByLatLong(position.coords.latitude, position.coords.longitude);
         const { long_name } = this.getDistrictFromAddress(addresses);
         position.district = long_name;
         await firebase.database().ref(`users/${uid}/position`).set(position);
-        this.setState({ isLoading: false });
     }
     render() {
         return (
             <View style={styles.container}>
                 <CloserUsersList />
-                {this.renderLoadingFooter()}
             </View>
         );
-    }
-    renderLoadingFooter() {
-        if (this.state.isLoading)
-            return <Text>Loading</Text>;
-        else
-            return <Text>Done</Text>;
     }
 }

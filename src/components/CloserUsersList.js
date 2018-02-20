@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, ListView, Text, RefreshControl } from 'react-native';
+import { View, ListView, RefreshControl } from 'react-native';
 import firebase from 'react-native-firebase';
 import styles from 'Finder/src/styles/CloserUsersList';
 import auth from 'Finder/src/services/auth';
 import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { ListItem } from 'react-native-elements';
+import anonymous from 'Finder/src/images/anonymous.png';
 
 export default class CloserUsersList extends Component {
     constructor(props) {
@@ -66,23 +68,24 @@ export default class CloserUsersList extends Component {
     renderList() {
         if (!this.state.users) return;
         return (
-            <ListView style={styles.list}
+            <ListView
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.isRefreshing}
                         onRefresh={() => this.refresh()}
                     />
                 }
+                renderRow={this.renderListItem}
                 dataSource={this.state.users}
-                renderRow={row => this.renderListItem(row)}
-                renderSeparator={row => <View style={styles.separator} />}
             />
         );
     }
-    renderListItem(props) {
-        if (typeof props === 'string')
-            return <Text style={styles.text}>{props}</Text>;
-        else
-            return <Text style={styles.text}>{props.profile.name} - {(props.distanceKm * 1000).toFixed(2)}M</Text>;
+    renderListItem(props, index) {
+        const distanceMeters = (props.distanceKm * 1000).toFixed(2);
+        return (
+            <ListItem key={index} title={props.profile.name} containerStyle={styles.listItem}
+                roundAvatar avatar={props.profile.photo_url ? { uri: props.profile.photo_url } : anonymous}
+                subtitle={`${distanceMeters} meters distance`} />
+        );
     }
 }
