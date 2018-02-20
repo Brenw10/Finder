@@ -4,12 +4,14 @@ import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
 import styles from 'Finder/src/styles/Home';
 import geolocation from 'Finder/src/services/geolocation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Home extends Component {
     static navigationOptions = {
         title: 'Home',
         headerLeft: null,
         gesturesEnabled: false,
+        tabBarIcon: <Ionicons name='ios-home-outline' size={25} color='#000' />
     }
     constructor(props) {
         super(props);
