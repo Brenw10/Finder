@@ -11,7 +11,7 @@ export default class Home extends Component {
         title: 'Home',
         headerLeft: null,
         gesturesEnabled: false,
-        tabBarIcon: <Ionicons name='ios-home-outline' size={25} color='#000' />
+        tabBarIcon: ({ tintColor }) => <Ionicons name='ios-home-outline' size={25} color={tintColor} />
     }
     constructor(props) {
         super(props);

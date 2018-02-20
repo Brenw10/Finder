@@ -7,7 +7,7 @@ export default class PhotoUpload extends Component {
         title: 'Photo Upload',
         headerLeft: null,
         gesturesEnabled: false,
-        tabBarIcon: <Ionicons name='ios-images-outline' size={25} color='#000' />
+        tabBarIcon: ({ tintColor }) => <Ionicons name='ios-images-outline' size={25} color={tintColor} />
     }
     render() {
         return (
