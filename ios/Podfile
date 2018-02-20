@@ -4,6 +4,7 @@ target 'Finder' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  # this line below is not working yet
+  # pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 end
