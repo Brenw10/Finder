@@ -1,11 +1,11 @@
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Home from 'Finder/src/views/home/Home';
-import PhotoUpload from 'Finder/src/views/profile/PhotoUpload';
+import Profile from 'Finder/src/views/profile/Profile';
 
 export default TabNavigator(
   {
     Home: { screen: Home },
-    PhotoUpload: { screen: PhotoUpload },
+    Profile: { screen: Profile },
   },
   {
     tabBarOptions: { inactiveTintColor: '#000', }
