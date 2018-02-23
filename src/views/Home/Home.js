@@ -30,7 +30,9 @@ export default class Home extends Component {
     }
     getDistrictFromAddress(addresses) {
         const components = addresses[0].address_components;
-        return components.find(address => address.types.includes('sublocality_level_1'));
+        const district = components.find(address => address.types.includes('sublocality_level_1'));
+        const city = components.find(address => address.types.includes('political'));
+        return district || city;
     }
     async setCurrentPosition(position) {
         this.props.navigation.setParams({ isLoading: true });
