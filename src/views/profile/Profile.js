@@ -77,7 +77,7 @@ export default class Profile extends Component {
         return <Avatar xlarge rounded source={imageSource} avatarStyle={styles.avatar} />;
     }
     renderUser() {
-        if (!this.state.currentUser) return;
+        if (!this.state.currentUser || !this.state.currentUser.position) return;
         return (
             <View style={styles.userContainer}>
                 <Text style={styles.userNameText}>{this.state.currentUser.profile.name}</Text>
