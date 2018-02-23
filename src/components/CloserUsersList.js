@@ -24,22 +24,15 @@ export default class CloserUsersList extends Component {
         this.fillCloserUsers();
     }
     async fillCloserUsers() {
-        // Todo: Fix this
         const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
-        try {
-            this.setState({ isRefreshing: true, isLoading: true });
-            const currentUser = await auth.getCurrentUser();
+        this.setState({ isRefreshing: true, isLoading: true });
+        const currentUser = await auth.getCurrentUser();
 
-            const users = await this.getUserByDisctrict(currentUser.position.district);
-            const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
-            const dataSourceValues = dataSource.cloneWithRows(view);
+        const users = await this.getUserByDisctrict(currentUser.position.district);
+        const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
+        const dataSourceValues = dataSource.cloneWithRows(view);
 
-            this.setState({ users: dataSourceValues, isRefreshing: false, isLoading: false });
-        } catch (ex) {
-            const message = 'There is no closer users. Get out of the jungle :p';
-            const dataSourceValues = dataSource.cloneWithRows([message]);
-            this.setState({ users: dataSourceValues, isRefreshing: false, isLoading: false });
-        }
+        this.setState({ users: dataSourceValues, isRefreshing: false, isLoading: false });
     }
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
