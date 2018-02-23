@@ -23,6 +23,7 @@ export default class CloserUsersList extends Component {
         this.fillCloserUsers();
     }
     async fillCloserUsers() {
+        // Todo: Fix this
         const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
         try {
             this.setState({ isRefreshing: true, isLoading: true });
@@ -42,7 +43,12 @@ export default class CloserUsersList extends Component {
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
         const query = usersRef.orderByChild('position/district').equalTo(district);
-        return query.once('value').then(data => Object.values(data.val()));
+        return query.once('value').then(data => {
+            // Todo: Generete a util method to make this
+            const keys = Object.keys(data.val());
+            const values = Object.values(data.val());
+            return values.map((value, index) => Object.assign(value, { uid: keys[index] }));
+        });
     }
     setUsersDistance(currentUser, users) {
         const currentUserLat = currentUser.position.coords.latitude;
@@ -75,17 +81,17 @@ export default class CloserUsersList extends Component {
                         onRefresh={() => this.refresh()}
                     />
                 }
-                renderRow={this.renderListItem}
+                renderRow={(user, index) => this.renderListItem(user, index)}
                 dataSource={this.state.users}
             />
         );
     }
-    renderListItem(props, index) {
-        const distanceMeters = (props.distanceKm * 1000).toFixed(2);
+    renderListItem(user, index) {
+        const distanceMeters = (user.distanceKm * 1000).toFixed(2);
         return (
-            <ListItem key={index} title={props.profile.name} containerStyle={styles.listItem}
-                roundAvatar avatar={props.profile.photo_url ? { uri: props.profile.photo_url } : anonymous}
-                subtitle={`${distanceMeters} meters distance`} />
+            <ListItem key={index} title={user.profile.name} containerStyle={styles.listItem}
+                onPress={() => this.props.openUser(user)} subtitle={`${distanceMeters} meters distance`}
+                roundAvatar avatar={user.profile.photo_url ? { uri: user.profile.photo_url } : anonymous} />
         );
     }
 }

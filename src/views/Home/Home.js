@@ -8,12 +8,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Home extends Component {
     static navigationOptions = ({ navigation }) => {
-        const { params } = navigation.state;
+        const { params = {} } = navigation.state;
         return {
             title: 'Home',
             headerLeft: null,
             gesturesEnabled: false,
-            headerRight: params && params.isLoading && <ActivityIndicator size="small" color="#000" style={styles.loader} />,
+            headerRight: params.isLoading && <ActivityIndicator size="small" color="#000" style={styles.loader} />,
             tabBarIcon: ({ tintColor }) => <Ionicons name='ios-home-outline' size={25} color={tintColor} />
         };
     }
@@ -44,7 +44,7 @@ export default class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <CloserUsersList />
+                <CloserUsersList openUser={user => this.props.navigation.navigate('UserProfile', { user })} />
             </View>
         );
     }

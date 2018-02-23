@@ -12,24 +12,33 @@ import upload from 'Finder/src/services/upload';
 import firebase from 'react-native-firebase';
 
 export default class Profile extends Component {
-    static navigationOptions = {
-        header: null,
-        gesturesEnabled: false,
-        tabBarIcon: ({ tintColor }) => <Ionicons name='ios-images-outline' size={25} color={tintColor} />
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        let options = {
+            gesturesEnabled: params.user ? true : false,
+            tabBarIcon: ({ tintColor }) => <Ionicons name='ios-images-outline' size={25} color={tintColor} />
+        };
+        if (!params.user) options.header = null;
+        return options;
     }
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false
         };
+    }
+    componentDidMount() {
         this.loadUser();
     }
     loadUser() {
-        return auth.getCurrentUser()
-            .then(currentUser => this.setState({ currentUser }));
+        const { params = {} } = this.props.navigation.state;
+        this.props.navigation.setParams({ user: params.user });
+        return params.user
+            ? this.setState({ currentUser: params.user })
+            : auth.getCurrentUser().then(currentUser => this.setState({ currentUser }));
     }
     selectImage() {
-        ImagePicker.openPicker({ width: 500, height: 500, cropping: true })
+        ImagePicker.openPicker({ width: 1000, height: 1200, cropping: true })
             .then(image => this.setUserImage(image));
     }
     async setUserImage(image) {
