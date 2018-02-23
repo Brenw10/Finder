@@ -24,8 +24,9 @@ export default class CloserUsersList extends Component {
         this.fillCloserUsers();
     }
     async fillCloserUsers() {
-        const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
         this.setState({ isRefreshing: true, isLoading: true });
+        
+        const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
         const currentUser = await auth.getCurrentUser();
 
         const users = await this.getUserByDisctrict(currentUser.position.district);
