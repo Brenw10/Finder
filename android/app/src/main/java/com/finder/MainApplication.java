@@ -6,6 +6,9 @@ import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -36,15 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new VectorIconsPackage(),
             new PickerPackage(),
-            new RNFirebasePackage(),
-            new PickerPackage(),
-            new VectorIconsPackage(),
-            new RNFirebasePackage(),
-            new VectorIconsPackage(),
-            new RNFirebasePackage(),
-            new VectorIconsPackage(),
-            new RNFirebasePackage(),
-            new VectorIconsPackage()
+            new RNFirebasePackage()
       );
     }
 

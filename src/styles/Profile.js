@@ -7,29 +7,21 @@ export default StyleSheet.create({
     },
     headerContainer: {
         padding: 30,
-        paddingTop: 50,
-        alignItems: 'center',
-        backgroundColor: '#21b798'
-    },
-    profileImage: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
-    bodyContainer: {
-        flex: 3
+        paddingTop: 40,
+        alignItems: 'center'
     },
     avatar: {
-        marginRight: -15
+        borderWidth: 2,
+        borderColor: 'white'
     },
     editAvatar: {
-        marginLeft: -40,
-        marginBottom: -90
+        marginTop: -50,
+        marginRight: -90
     },
     userNameText: {
         color: 'white',
         fontSize: 20,
-        // fontWeight: 'bold'
+        fontWeight: 'bold'
     },
     userContainer: {
         marginTop: 10,
@@ -43,7 +35,7 @@ export default StyleSheet.create({
     districtText: {
         color: 'white',
         fontSize: 15,
-        fontWeight: '600',
+        // fontWeight: '600',
         textAlign: 'center'
     }
 })
