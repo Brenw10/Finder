@@ -43,7 +43,8 @@ export default class Profile extends Component {
     }
     selectImage() {
         ImagePicker.openPicker({ width: 1000, height: 1200, cropping: true })
-            .then(image => this.setUserImage(image));
+            .then(image => this.setUserImage(image))
+            .catch(console.log);
     }
     async setUserImage(image) {
         this.setState({ isLoading: true });
