@@ -35,7 +35,6 @@ export default StyleSheet.create({
     districtText: {
         color: 'white',
         fontSize: 15,
-        // fontWeight: '600',
         textAlign: 'center'
     }
 })
