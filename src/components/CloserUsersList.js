@@ -7,6 +7,7 @@ import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { ListItem } from 'react-native-elements';
 import anonymous from 'Finder/src/images/anonymous.png';
+import util from 'Finder/src/services/util';
 
 export default class CloserUsersList extends Component {
     constructor(props) {
@@ -43,12 +44,7 @@ export default class CloserUsersList extends Component {
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
         const query = usersRef.orderByChild('position/district').equalTo(district);
-        return query.once('value').then(data => {
-            // Todo: Generete a util method to make this
-            const keys = Object.keys(data.val());
-            const values = Object.values(data.val());
-            return values.map((value, index) => Object.assign(value, { uid: keys[index] }));
-        });
+        return query.once('value').then(data => util.objectToArray(data.val(), 'uid'));
     }
     setUsersDistance(currentUser, users) {
         const currentUserLat = currentUser.position.coords.latitude;
