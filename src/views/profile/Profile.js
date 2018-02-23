@@ -24,7 +24,8 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            isEditable: false
         };
     }
     componentDidMount() {
@@ -33,9 +34,12 @@ export default class Profile extends Component {
     loadUser() {
         const { params = {} } = this.props.navigation.state;
         this.props.navigation.setParams({ user: params.user });
-        return params.user
-            ? this.setState({ currentUser: params.user })
-            : auth.getCurrentUser().then(currentUser => this.setState({ currentUser }));
+        if (params.user) {
+            this.setState({ currentUser: params.user, isEditable: false });
+            return Promise.resolve(params.user);
+        } else {
+            return auth.getCurrentUser().then(currentUser => this.setState({ currentUser, isEditable: true }));
+        }
     }
     selectImage() {
         ImagePicker.openPicker({ width: 1000, height: 1200, cropping: true })
@@ -61,7 +65,7 @@ export default class Profile extends Component {
         return (
             <ImageBackground style={styles.headerContainer} source={profileBackground}>
                 {this.renderAvatar()}
-                <Icon raised name='create' type='ionicons' containerStyle={styles.editAvatar} onPress={() => this.selectImage()} />
+                {this.renderEditImage()}
                 {this.renderUser()}
             </ImageBackground>
         );
@@ -82,5 +86,9 @@ export default class Profile extends Component {
                 </View>
             </View>
         );
+    }
+    renderEditImage() {
+        if (!this.state.isEditable) return;
+        return <Icon raised name='create' type='ionicons' containerStyle={styles.editAvatar} onPress={() => this.selectImage()} />;
     }
 }
