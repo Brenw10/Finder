@@ -14,12 +14,11 @@ import firebase from 'react-native-firebase';
 export default class Profile extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
-        let options = {
-            gesturesEnabled: params.user ? true : false,
+        return {
+            header: null,
+            gesturesEnabled: params.user,
             tabBarIcon: ({ tintColor }) => <Ionicons name='ios-images-outline' size={25} color={tintColor} />
         };
-        if (!params.user) options.header = null;
-        return options;
     }
     constructor(props) {
         super(props);

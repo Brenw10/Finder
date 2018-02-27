@@ -10,8 +10,7 @@ export default class Home extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         return {
-            title: 'Home',
-            headerLeft: null,
+            header: null,
             gesturesEnabled: false,
             headerRight: params.isLoading && <ActivityIndicator size="small" color="#000" style={styles.loader} />,
             tabBarIcon: ({ tintColor }) => <Ionicons name='ios-home-outline' size={25} color={tintColor} />
