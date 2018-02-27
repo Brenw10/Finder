@@ -38,9 +38,7 @@ export default class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{ height: 70, backgroundColor: '#1976D2' }}>
-                    <NavigationBar styleName="clear" rightComponent={this.renderMyProfile()} centerComponent={<Title>HOME</Title>} />
-                </View>
+                <NavigationBar styleName="inline" rightComponent={this.renderMyProfile()} centerComponent={<Title>HOME</Title>} />
                 <CloserUsersList openUser={user => this.props.navigation.navigate('UserProfile', { user })} />
             </View>
         );
