@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, ListView, RefreshControl } from 'react-native';
+import { View } from 'react-native';
 import firebase from 'react-native-firebase';
 import styles from 'Finder/src/styles/CloserUsersList';
 import auth from 'Finder/src/services/auth';
 import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { ListItem } from 'react-native-elements';
 import anonymous from 'Finder/src/images/anonymous.png';
 import util from 'Finder/src/services/util';
+import { ListView, ImageBackground, Tile, Title, Subtitle, Divider, TouchableOpacity } from '@shoutem/ui';
 
 export default class CloserUsersList extends Component {
     constructor(props) {
@@ -18,22 +18,21 @@ export default class CloserUsersList extends Component {
         };
     }
     componentDidMount() {
-        this.fillCloserUsers();
+        this.refresh();
     }
     refresh() {
         this.fillCloserUsers();
     }
     async fillCloserUsers() {
         this.setState({ isRefreshing: true, isLoading: true });
-        
-        const dataSource = new ListView.DataSource({ rowHasChanged: (a, b) => a !== b });
+
         const currentUser = await auth.getCurrentUser();
-
         const users = await this.getUserByDisctrict(currentUser.position.district);
-        const view = this.sortUsersByDistance(this.setUsersDistance(currentUser, users));
-        const dataSourceValues = dataSource.cloneWithRows(view);
 
-        this.setState({ users: dataSourceValues, isRefreshing: false, isLoading: false });
+        const usersWithDistance = this.setUsersDistance(currentUser, users);
+        const sortedUsers = this.sortUsersByDistance(usersWithDistance);
+
+        this.setState({ users: sortedUsers, isRefreshing: false, isLoading: false });
     }
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
@@ -65,23 +64,25 @@ export default class CloserUsersList extends Component {
         if (!this.state.users) return;
         return (
             <ListView
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.isRefreshing}
-                        onRefresh={() => this.refresh()}
-                    />
-                }
+                data={this.state.users}
+                loading={this.state.isRefreshing}
+                onRefresh={() => this.refresh()}
                 renderRow={(user, index) => this.renderListItem(user, index)}
-                dataSource={this.state.users}
             />
         );
     }
     renderListItem(user, index) {
         const distanceMeters = (user.distanceKm * 1000).toFixed(2);
         return (
-            <ListItem key={index} title={user.profile.name} containerStyle={styles.listItem}
-                onPress={() => this.props.openUser(user)} subtitle={`${distanceMeters} meters distance`}
-                roundAvatar avatar={user.profile.photo_url ? { uri: user.profile.photo_url } : anonymous} />
+            <TouchableOpacity onPress={() => this.props.openUser(user)}>
+                <Divider styleName="line" />
+                <ImageBackground styleName="large" source={user.profile.photo_url ? { uri: user.profile.photo_url } : anonymous}>
+                    <Tile>
+                        <Title styleName="md-gutter-bottom">{user.profile.name}</Title>
+                        <Subtitle styleName="sm-gutter-horizontal">{distanceMeters} meters distance</Subtitle>
+                    </Tile>
+                </ImageBackground>
+            </TouchableOpacity>
         );
     }
 }
