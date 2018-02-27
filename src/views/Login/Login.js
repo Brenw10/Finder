@@ -65,7 +65,7 @@ export default class Login extends Component {
         return (
             <SignIn
                 loadRegister={() => this.loadRegister()}
-                success={() => this.props.navigation.navigate('HomeTabNavigator')}
+                success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
     }
@@ -74,7 +74,7 @@ export default class Login extends Component {
         return (
             <SignUp
                 loadLogin={() => this.loadLogin()}
-                success={() => this.props.navigation.navigate('HomeTabNavigator')}
+                success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
     }

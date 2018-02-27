@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
 import styles from 'Finder/src/styles/Home';
 import geolocation from 'Finder/src/services/geolocation';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NavigationBar, Title, Icon } from '@shoutem/ui';
 
 export default class Home extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const { params = {} } = navigation.state;
-        return {
-            header: null,
-            gesturesEnabled: false,
-            headerRight: params.isLoading && <ActivityIndicator size="small" color="#000" style={styles.loader} />,
-            tabBarIcon: ({ tintColor }) => <Ionicons name='ios-home-outline' size={25} color={tintColor} />
-        };
-    }
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false
+    };
     constructor(props) {
         super(props);
         this.state = {};
@@ -45,8 +40,18 @@ export default class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View style={{ height: 70, backgroundColor: '#1976D2' }}>
+                    <NavigationBar styleName="clear" rightComponent={this.renderMyProfile()} centerComponent={<Title>HOME</Title>} />
+                </View>
                 <CloserUsersList openUser={user => this.props.navigation.navigate('UserProfile', { user })} />
             </View>
+        );
+    }
+    renderMyProfile() {
+        return (
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile')}>
+                <Icon name="user-profile" />
+            </TouchableOpacity>
         );
     }
 }

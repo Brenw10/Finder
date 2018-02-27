@@ -11,4 +11,6 @@ target 'Finder' do
   # pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   # pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
 end
