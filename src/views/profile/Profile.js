@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from 'Finder/src/styles/Profile';
 import { Avatar } from 'react-native-elements';
@@ -50,6 +50,9 @@ export default class Profile extends Component {
         return (
             <View style={styles.container}>
                 {this.renderHeader()}
+                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.backButton}>
+                    <FontAwesome name='angle-left' color='white' size={35} />
+                </TouchableOpacity>
                 <Spinner visible={this.state.isLoading} />
             </View>
         );
@@ -83,9 +86,9 @@ export default class Profile extends Component {
     renderEditImage() {
         if (!this.state.isEditable) return;
         return (
-            <TouchableHighlight style={styles.editAvatar} onPress={() => this.selectImage()}>
+            <TouchableOpacity style={styles.editAvatar} onPress={() => this.selectImage()}>
                 <FontAwesome name='pencil' size={23} color='black' />
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 }

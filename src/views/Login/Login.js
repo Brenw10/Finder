@@ -40,7 +40,7 @@ export default class Login extends Component {
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
                     <Image style={styles.logo} source={logo}
-                        animation='bounceIn' duration={1200} delay={1200} />
+                        animation='bounceIn' duration={1200} />
                 </View>
                 {this.renderLoginOptions()}
                 <KeyboardAvoidingView behavior='padding' style={styles.bottomContainer}>

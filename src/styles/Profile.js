@@ -24,11 +24,11 @@ export default StyleSheet.create({
         borderRadius: 100,
         shadowColor: 'black',
         shadowOffset: {
-            width: 3,
-            height: 5
+            width: 2,
+            height: 3
         },
-        shadowRadius: 5,
-        shadowOpacity: 0.5
+        shadowRadius: 0,
+        shadowOpacity: 0.8
     },
     userNameText: {
         color: 'white',
@@ -50,5 +50,10 @@ export default StyleSheet.create({
         fontSize: 15,
         textAlign: 'center',
         fontFamily: 'Rubik-Regular',
+    },
+    backButton: {
+        position: 'absolute',
+        marginTop: 35,
+        marginLeft: 20
     }
 })
