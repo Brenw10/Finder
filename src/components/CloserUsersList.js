@@ -76,7 +76,7 @@ export default class CloserUsersList extends Component {
         return (
             <TouchableOpacity onPress={() => this.props.openUser(user)}>
                 <Divider styleName="line" />
-                <ImageBackground styleName="large" source={user.profile.photo_url ? { uri: user.profile.photo_url } : anonymous}>
+                <ImageBackground styleName="large" source={user.profile.photo_url ? { uri: user.profile.photo_url } : null}>
                     <Tile>
                         <Title styleName="md-gutter-bottom">{user.profile.name}</Title>
                         <Subtitle styleName="sm-gutter-horizontal">{distanceMeters} meters distance</Subtitle>

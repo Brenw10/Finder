@@ -26,7 +26,7 @@ export default class Home extends Component {
         const components = addresses[0].address_components;
         const district = components.find(address => address.types.includes('sublocality_level_1'));
         const city = components.find(address => address.types.includes('political'));
-        return district || city;
+        return district || city || 'Unknown Place';
     }
     async setCurrentPosition(position) {
         const uid = firebase.auth().currentUser.uid;
