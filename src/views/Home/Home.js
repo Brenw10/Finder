@@ -29,13 +29,11 @@ export default class Home extends Component {
         return district || city;
     }
     async setCurrentPosition(position) {
-        this.props.navigation.setParams({ isLoading: true });
         const uid = firebase.auth().currentUser.uid;
         const addresses = await geolocation.getAddressesByLatLong(position.coords.latitude, position.coords.longitude);
         const { long_name } = this.getDistrictFromAddress(addresses);
         position.district = long_name;
         await firebase.database().ref(`users/${uid}/position`).set(position);
-        this.props.navigation.setParams({ isLoading: false });
     }
     render() {
         return (

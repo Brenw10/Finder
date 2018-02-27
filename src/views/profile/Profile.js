@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { View, Text, TouchableHighlight } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from 'Finder/src/styles/Profile';
-import { Avatar, Icon } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 import anonymous from 'Finder/src/images/anonymous.png';
 import auth from 'Finder/src/services/auth';
-import profileBackground from 'Finder/src/images/profile-background.png';
 import Spinner from 'react-native-loading-spinner-overlay';
 import upload from 'Finder/src/services/upload';
 import firebase from 'react-native-firebase';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class Profile extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const { params = {} } = navigation.state;
-        return {
-            header: null,
-            gesturesEnabled: params.user,
-            tabBarIcon: ({ tintColor }) => <Ionicons name='ios-images-outline' size={25} color={tintColor} />
-        };
-    }
+    static navigationOptions = {
+        header: null,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +26,6 @@ export default class Profile extends Component {
     }
     loadUser() {
         const { params = {} } = this.props.navigation.state;
-        this.props.navigation.setParams({ user: params.user });
         if (params.user) {
             this.setState({ currentUser: params.user, isEditable: false });
             return Promise.resolve(params.user);
@@ -63,11 +56,11 @@ export default class Profile extends Component {
     }
     renderHeader() {
         return (
-            <ImageBackground style={styles.headerContainer} source={profileBackground}>
+            <View style={styles.headerContainer}>
                 {this.renderAvatar()}
                 {this.renderEditImage()}
                 {this.renderUser()}
-            </ImageBackground>
+            </View>
         );
     }
     renderAvatar() {
@@ -81,7 +74,7 @@ export default class Profile extends Component {
             <View style={styles.userContainer}>
                 <Text style={styles.userNameText}>{this.state.currentUser.profile.name}</Text>
                 <View style={styles.locationContainer}>
-                    <Icon name='map-marker' type='font-awesome' color='white' size={15} />
+                    <FontAwesome name='map-marker' color='white' size={22} />
                     <Text style={styles.districtText}> {this.state.currentUser.position.district}</Text>
                 </View>
             </View>
@@ -89,6 +82,10 @@ export default class Profile extends Component {
     }
     renderEditImage() {
         if (!this.state.isEditable) return;
-        return <Icon raised name='create' type='ionicons' containerStyle={styles.editAvatar} onPress={() => this.selectImage()} />;
+        return (
+            <TouchableHighlight style={styles.editAvatar} onPress={() => this.selectImage()}>
+                <FontAwesome name='pencil' size={23} color='black' />
+            </TouchableHighlight>
+        );
     }
 }
