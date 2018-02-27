@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from 'Finder/src/styles/Profile';
-import { Avatar } from 'react-native-elements';
 import anonymous from 'Finder/src/images/anonymous.png';
 import auth from 'Finder/src/services/auth';
 import Spinner from 'react-native-loading-spinner-overlay';
 import upload from 'Finder/src/services/upload';
 import firebase from 'react-native-firebase';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Lightbox } from '@shoutem/ui';
 
 export default class Profile extends Component {
     static navigationOptions = {
@@ -69,7 +69,11 @@ export default class Profile extends Component {
     renderAvatar() {
         const currentUser = this.state.currentUser;
         const imageSource = currentUser && currentUser.profile.photo_url ? { uri: currentUser.profile.photo_url } : anonymous;
-        return <Avatar xlarge rounded source={imageSource} avatarStyle={styles.avatar} />;
+        return (
+            <Lightbox>
+                <Image source={imageSource} style={styles.avatar} />
+            </Lightbox>
+        );
     }
     renderUser() {
         if (!this.state.currentUser || !this.state.currentUser.position) return;

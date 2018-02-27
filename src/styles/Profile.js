@@ -13,7 +13,10 @@ export default StyleSheet.create({
     },
     avatar: {
         borderWidth: 2,
-        borderColor: 'white'
+        borderColor: 'white',
+        width: 150,
+        height: 150,
+        borderRadius: 75
     },
     editAvatar: {
         marginTop: -50,
