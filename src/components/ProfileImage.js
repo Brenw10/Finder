@@ -5,6 +5,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import firebase from 'react-native-firebase';
 import upload from 'Finder/src/services/upload';
 import ImagePicker from 'react-native-image-crop-picker';
+import styles from 'Finder/src/styles/ProfileImage';
 
 export default class ProfileImage extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ export default class ProfileImage extends Component {
     render() {
         return (
             <View style={this.props.containerStyle}>
-                <TouchableOpacity onPress={() => this.selectImage()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.selectImage()}>
                     <FontAwesome name='pencil' size={23} color='black' />
                 </TouchableOpacity>
                 <Spinner visible={this.state.isLoading} />

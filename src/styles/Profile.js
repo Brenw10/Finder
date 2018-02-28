@@ -20,18 +20,7 @@ export default StyleSheet.create({
     },
     editAvatar: {
         marginTop: -50,
-        marginRight: -100,
-        backgroundColor: 'white',
-        padding: 15,
-        paddingLeft: 17,
-        borderRadius: 100,
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 2,
-            height: 3
-        },
-        shadowRadius: 0,
-        shadowOpacity: 0.8
+        marginRight: -100
     },
     userNameText: {
         color: 'white',
