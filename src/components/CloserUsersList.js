@@ -6,7 +6,7 @@ import auth from 'Finder/src/services/auth';
 import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import anonymous from 'Finder/src/images/anonymous.png';
-import { ListView, ImageBackground, Tile, Title, Subtitle, Divider, TouchableOpacity } from '@shoutem/ui';
+import { ListView, ImageBackground, Tile, Title, Subtitle, Divider, TouchableOpacity, Button, Icon, Text } from '@shoutem/ui';
 
 export default class CloserUsersList extends Component {
     constructor(props) {
@@ -51,6 +51,10 @@ export default class CloserUsersList extends Component {
     sortUsersByDistance(users) {
         return users.sort((a, b) => a.distanceKm - b.distanceKm);
     }
+    setStars(user, stars) {
+        const currentUser = firebase.auth().currentUser;
+        firebase.database().ref(`stars/${currentUser.uid}/users/${user.profile.uid}`).update({ stars });
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -73,15 +77,27 @@ export default class CloserUsersList extends Component {
     renderListItem(user, index) {
         const distanceMeters = (user.distanceKm * 1000).toFixed(2);
         return (
-            <TouchableOpacity onPress={() => this.props.openUser(user)}>
-                <Divider styleName="line" />
-                <ImageBackground styleName="large" source={user.profile.photo_url ? { uri: user.profile.photo_url } : null}>
-                    <Tile>
-                        <Title styleName="md-gutter-bottom">{user.profile.name}</Title>
-                        <Subtitle styleName="sm-gutter-horizontal">{distanceMeters} meters distance</Subtitle>
-                    </Tile>
-                </ImageBackground>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity onPress={() => this.props.openUser(user)}>
+                    <ImageBackground styleName="large" source={user.profile.photo_url ? { uri: user.profile.photo_url } : null}>
+                        <Tile>
+                            <Title styleName="md-gutter-bottom">{user.profile.name}</Title>
+                            <Subtitle styleName="sm-gutter-horizontal">{distanceMeters} meters distance</Subtitle>
+                        </Tile>
+                    </ImageBackground>
+                    <Divider styleName="line" />
+                </TouchableOpacity>
+                <View style={styles.actionContainer}>
+                    <Button styleName="full-width" onPress={() => this.props.openUser(user)}>
+                        <Icon name="user-profile" />
+                        <Text>VIEW</Text>
+                    </Button>
+                    <Button styleName="full-width" onPress={() => this.setStars(user, 10)}>
+                        <Icon name="add-to-favorites-on" />
+                        <Text>FULL STARS</Text>
+                    </Button>
+                </View>
+            </View>
         );
     }
 }
