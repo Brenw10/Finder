@@ -8,7 +8,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import upload from 'Finder/src/services/upload';
 import firebase from 'react-native-firebase';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Lightbox } from '@shoutem/ui';
 
 export default class Profile extends Component {
     static navigationOptions = {
@@ -69,11 +68,7 @@ export default class Profile extends Component {
     renderAvatar() {
         const currentUser = this.state.currentUser;
         const imageSource = currentUser && currentUser.profile.photo_url ? { uri: currentUser.profile.photo_url } : anonymous;
-        return (
-            <Lightbox>
-                <Image source={imageSource} style={styles.avatar} />
-            </Lightbox>
-        );
+        return <Image source={imageSource} style={styles.avatar} />;
     }
     renderUser() {
         if (!this.state.currentUser || !this.state.currentUser.position) return;
