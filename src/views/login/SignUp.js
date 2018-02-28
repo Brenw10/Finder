@@ -36,7 +36,7 @@ export default class SignUp extends Component {
             .catch(() => this.error());
     }
     async success(user, name, email, password) {
-        await firebase.database().ref(`users/${user.uid}/profile`).set({ name });
+        await firebase.database().ref(`users/${user.uid}/profile`).set({ name, uid: user.uid });
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => { this.setState({ isLoading: false }); this.props.success(); })
             .catch(() => this.error());

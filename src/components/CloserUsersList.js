@@ -6,7 +6,6 @@ import auth from 'Finder/src/services/auth';
 import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import anonymous from 'Finder/src/images/anonymous.png';
-import util from 'Finder/src/services/util';
 import { ListView, ImageBackground, Tile, Title, Subtitle, Divider, TouchableOpacity } from '@shoutem/ui';
 
 export default class CloserUsersList extends Component {
@@ -37,7 +36,7 @@ export default class CloserUsersList extends Component {
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
         const query = usersRef.orderByChild('position/district').equalTo(district);
-        return query.once('value').then(data => util.objectToArray(data.val(), 'uid'));
+        return query.once('value').then(data => Object.values(data.val()));
     }
     setUsersDistance(currentUser, users) {
         const currentUserLat = currentUser.position.coords.latitude;
