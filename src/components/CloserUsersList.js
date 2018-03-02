@@ -52,8 +52,10 @@ export default class CloserUsersList extends Component {
         return users.sort((a, b) => a.distanceKm - b.distanceKm);
     }
     setStars(user, stars) {
-        const currentUser = firebase.auth().currentUser;
-        firebase.database().ref(`stars/${currentUser.uid}/users/${user.profile.uid}`).update({ stars });
+        const { uid } = firebase.auth().currentUser;
+        firebase.database().ref(`stars/${user.profile.uid}/received/${uid}`).set({ uid, stars });
+        firebase.database().ref(`stars/${user.profile.uid}/details/${uid}`).set({ uid, viewed: false });
+        firebase.database().ref(`stars/${uid}/sent/${user.profile.uid}`).set({ uid: user.profile.uid, stars });
     }
     render() {
         return (

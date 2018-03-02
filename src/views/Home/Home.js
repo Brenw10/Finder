@@ -5,6 +5,7 @@ import CloserUsersList from 'Finder/src/components/CloserUsersList';
 import styles from 'Finder/src/styles/Home';
 import geolocation from 'Finder/src/services/geolocation';
 import { NavigationBar, Title, Icon } from '@shoutem/ui';
+import Match from 'Finder/src/components/Match';
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -33,13 +34,14 @@ export default class Home extends Component {
         const addresses = await geolocation.getAddressesByLatLong(position.coords.latitude, position.coords.longitude);
         const { long_name } = this.getDistrictFromAddress(addresses);
         position.district = long_name;
-        await firebase.database().ref(`users/${uid}/position`).set(position);
+        firebase.database().ref(`users/${uid}/position`).set(position);
     }
     render() {
         return (
             <View style={styles.container}>
                 <NavigationBar styleName="inline" rightComponent={this.renderMyProfile()} centerComponent={<Title>HOME</Title>} />
                 <CloserUsersList openUser={user => this.props.navigation.navigate('UserProfile', { user })} />
+                <Match />
             </View>
         );
     }
