@@ -4,7 +4,7 @@ import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
 import styles from 'Finder/src/styles/Home';
 import geolocation from 'Finder/src/services/geolocation';
-import { NavigationBar, Title, Icon } from '@shoutem/ui';
+import { NavigationBar, Icon, DropDownMenu } from '@shoutem/ui';
 import Match from 'Finder/src/components/Match';
 
 export default class Home extends Component {
@@ -14,7 +14,16 @@ export default class Home extends Component {
     };
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            item: {
+                MENU: '☰',
+                SAIR: 'SAIR'
+            }
+        };
+        this.state.menu = [
+            { title: this.state.item.MENU },
+            { title: this.state.item.SAIR }
+        ];
     }
     componentDidMount() {
         navigator.geolocation.watchPosition(
@@ -22,6 +31,12 @@ export default class Home extends Component {
             console.log,
             { enableHighAccuracy: true, timeout: 0, maximumAge: 0, distanceFilter: 1 }
         );
+    }
+    menu(selectedMenu) {
+        switch (selectedMenu.title) {
+            case this.state.item.SAIR:
+                this.props.navigation.goBack();
+        }
     }
     getDistrictFromAddress(addresses) {
         const components = addresses[0].address_components;
@@ -39,7 +54,7 @@ export default class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <NavigationBar styleName="inline" rightComponent={this.renderMyProfile()} centerComponent={<Title>HOME</Title>} />
+                <NavigationBar styleName="inline" leftComponent={this.renderMenu()} rightComponent={this.renderMyProfile()} title="HOME" />
                 <CloserUsersList openUser={user => this.props.navigation.navigate('UserProfile', { user })} />
                 <Match />
             </View>
@@ -50,6 +65,17 @@ export default class Home extends Component {
             <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile')}>
                 <Icon name="user-profile" />
             </TouchableOpacity>
+        );
+    }
+    renderMenu() {
+        return (
+            <DropDownMenu
+                options={this.state.menu}
+                selectedOption={this.state.menu[0]}
+                onOptionSelected={selectedMenu => this.menu(selectedMenu)}
+                titleProperty="title"
+                valueProperty="title"
+            />
         );
     }
 }
