@@ -30,7 +30,7 @@ export default class Login extends Component {
             if (user) {
                 this.props.navigation.navigate('Home');
             }
-        })
+        });
     }
     loadRegister() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -73,7 +73,6 @@ export default class Login extends Component {
         return (
             <SignIn
                 loadRegister={() => this.loadRegister()}
-                success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
     }
@@ -82,7 +81,6 @@ export default class Login extends Component {
         return (
             <SignUp
                 loadLogin={() => this.loadLogin()}
-                success={() => this.props.navigation.navigate('Home')}
                 toggleAlert={bool => this.toggleAlert(bool)} />
         );
     }

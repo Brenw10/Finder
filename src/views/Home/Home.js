@@ -35,7 +35,8 @@ export default class Home extends Component {
     menu(selectedMenu) {
         switch (selectedMenu.title) {
             case this.state.item.SAIR:
-                this.props.navigation.goBack();
+                firebase.auth().signOut()
+                    .then(() => this.props.navigation.goBack());
         }
     }
     getDistrictFromAddress(addresses) {

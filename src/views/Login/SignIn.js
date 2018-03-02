@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 export default class SignIn extends Component {
     static propTypes = {
         loadRegister: PropTypes.func.isRequired,
-        success: PropTypes.func.isRequired,
         toggleAlert: PropTypes.func.isRequired
     }
     constructor(props) {
@@ -26,7 +25,7 @@ export default class SignIn extends Component {
         firebase
             .auth()
             .signInAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(() => { this.setState({ isLoading: false }); this.props.success(); })
+            .then(() => this.setState({ isLoading: false }))
             .catch(() => { this.setState({ isLoading: false }); this.props.toggleAlert(true); });
     }
     async loadRegister() {
