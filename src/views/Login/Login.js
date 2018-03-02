@@ -6,6 +6,7 @@ import SignIn from 'Finder/src/views/login/SignIn';
 import SignUp from 'Finder/src/views/login/SignUp';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { Image } from 'react-native-animatable';
+import firebase from 'react-native-firebase';
 import logo from 'Finder/src/images/logo.png';
 
 export default class Login extends Component {
@@ -23,6 +24,13 @@ export default class Login extends Component {
             }
         };
         this.state.selectedView = this.state.views.LOGIN_OPTIONS;
+    }
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.props.navigation.navigate('Home');
+            }
+        })
     }
     loadRegister() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
