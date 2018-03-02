@@ -6,7 +6,6 @@ export default StyleSheet.create({
     },
     actionContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 30
+        justifyContent: 'space-between'
     }
 })
