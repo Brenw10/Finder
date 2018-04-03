@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from 'Finder/src/styles/Profile';
 import anonymous from 'Finder/src/images/anonymous.png';
-import auth from 'Finder/src/services/auth';
+import user from 'Finder/src/services/user';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ProfileImage from 'Finder/src/components/ProfileImage';
 
@@ -25,7 +25,7 @@ export default class Profile extends Component {
             this.setState({ currentUser: params.user, isEditable: false });
             return Promise.resolve(params.user);
         } else {
-            return auth.getCurrentUser().then(currentUser => this.setState({ currentUser, isEditable: true }));
+            return user.getCurrentUser().then(currentUser => this.setState({ currentUser, isEditable: true }));
         }
     }
     render() {
@@ -49,17 +49,17 @@ export default class Profile extends Component {
     }
     renderAvatar() {
         const currentUser = this.state.currentUser;
-        const imageSource = currentUser && currentUser.profile.photo_url ? { uri: currentUser.profile.photo_url } : anonymous;
+        const imageSource = currentUser && currentUser.photo_url ? { uri: currentUser.photo_url } : anonymous;
         return <Image source={imageSource} style={styles.avatar} />;
     }
     renderUser() {
-        if (!this.state.currentUser || !this.state.currentUser.position) return;
+        if (!this.state.currentUser) return;
         return (
             <View style={styles.userContainer}>
-                <Text style={styles.userNameText}>{this.state.currentUser.profile.name}</Text>
+                <Text style={styles.userNameText}>{this.state.currentUser.name}</Text>
                 <View style={styles.locationContainer}>
                     <FontAwesome name='map-marker' color='white' size={22} />
-                    <Text style={styles.districtText}> {this.state.currentUser.position.district}</Text>
+                    <Text style={styles.districtText}> {this.state.currentUser.district}</Text>
                 </View>
             </View>
         );

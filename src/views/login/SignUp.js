@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 export default class SignUp extends Component {
     static propTypes = {
         loadLogin: PropTypes.func.isRequired,
+        // todo: Bring toggle alert to this page
         toggleAlert: PropTypes.func.isRequired
     }
     constructor(props) {
@@ -35,7 +36,7 @@ export default class SignUp extends Component {
             .catch(() => this.error());
     }
     async success(user, name, email, password) {
-        await firebase.database().ref(`users/${user.uid}/profile`).set({ name, uid: user.uid });
+        await firebase.database().ref(`users/${user.uid}`).set({ name, uid: user.uid });
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => this.setState({ isLoading: false }))
             .catch(() => this.error());

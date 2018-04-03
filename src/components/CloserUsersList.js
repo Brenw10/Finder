@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import firebase from 'react-native-firebase';
 import styles from 'Finder/src/styles/CloserUsersList';
-import auth from 'Finder/src/services/auth';
+import user from 'Finder/src/services/user';
 import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import anonymous from 'Finder/src/images/anonymous.png';
@@ -25,37 +25,26 @@ export default class CloserUsersList extends Component {
     async fillCloserUsers() {
         this.setState({ isRefreshing: true, isLoading: true });
 
-        const currentUser = await auth.getCurrentUser();
-        const users = await this.getUserByDisctrict(currentUser.position.district);
+        const currentUser = await user.getCurrentUser();
+        const users = await this.getUserByDisctrict(currentUser.district);
 
         const usersWithDistance = this.setUsersDistance(currentUser, users);
-        const sortedUsers = this.sortUsersByDistance(usersWithDistance);
+        const sortedUsers = usersWithDistance.sort((a, b) => a.distanceKm - b.distanceKm);
 
         this.setState({ users: sortedUsers, isRefreshing: false, isLoading: false });
     }
     getUserByDisctrict(district) {
         const usersRef = firebase.database().ref('users');
-        const query = usersRef.orderByChild('position/district').equalTo(district);
+        const query = usersRef.orderByChild('district').equalTo(district);
         return query.once('value').then(data => Object.values(data.val()));
     }
     setUsersDistance(currentUser, users) {
-        const currentUserLat = currentUser.position.coords.latitude;
-        const currentUserLong = currentUser.position.coords.longitude;
+        const currentUserLat = currentUser.latitude;
+        const currentUserLong = currentUser.longitude;
         return users.map(user => {
-            const userLatitude = user.position.coords.latitude;
-            const userLongitude = user.position.coords.longitude;
-            const distanceKm = geolocation.getDistanceFromLatLonInKm(currentUserLat, currentUserLong, userLatitude, userLongitude);
+            const distanceKm = geolocation.getDistanceFromLatLonInKm(currentUserLat, currentUserLong, user.latitude, user.longitude);
             return Object.assign(user, { distanceKm });
         });
-    }
-    sortUsersByDistance(users) {
-        return users.sort((a, b) => a.distanceKm - b.distanceKm);
-    }
-    setStars(user, stars) {
-        const { uid } = firebase.auth().currentUser;
-        firebase.database().ref(`stars/${user.profile.uid}/received/${uid}`).set({ uid, stars });
-        firebase.database().ref(`stars/${user.profile.uid}/details/${uid}`).set({ uid, viewed: false });
-        firebase.database().ref(`stars/${uid}/sent/${user.profile.uid}`).set({ uid: user.profile.uid, stars });
     }
     render() {
         return (
@@ -81,9 +70,9 @@ export default class CloserUsersList extends Component {
         return (
             <View>
                 <TouchableOpacity onPress={() => this.props.openUser(user)}>
-                    <ImageBackground styleName="large" source={user.profile.photo_url ? { uri: user.profile.photo_url } : null}>
+                    <ImageBackground styleName="large" source={user.photo_url ? { uri: user.photo_url } : null}>
                         <Tile>
-                            <Title styleName="md-gutter-bottom">{user.profile.name}</Title>
+                            <Title styleName="md-gutter-bottom">{user.name}</Title>
                             <Subtitle styleName="sm-gutter-horizontal">{distanceMeters} meters distance</Subtitle>
                         </Tile>
                     </ImageBackground>
@@ -94,9 +83,9 @@ export default class CloserUsersList extends Component {
                         <Icon name="user-profile" />
                         <Text>VIEW</Text>
                     </Button>
-                    <Button styleName="full-width" onPress={() => this.setStars(user, 10)}>
+                    <Button styleName="full-width">
                         <Icon name="add-to-favorites-on" />
-                        <Text>FULL STARS</Text>
+                        <Text>STARS</Text>
                     </Button>
                 </View>
             </View>

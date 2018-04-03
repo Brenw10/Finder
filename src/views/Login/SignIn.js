@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 export default class SignIn extends Component {
     static propTypes = {
         loadRegister: PropTypes.func.isRequired,
+        // todo: Bring toggle alert to this page
         toggleAlert: PropTypes.func.isRequired
     }
     constructor(props) {
