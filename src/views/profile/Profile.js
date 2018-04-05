@@ -26,7 +26,7 @@ export default class Profile extends Component {
         const addresses = await geolocation.getAddressesByLatLong(currentUser.latitude, currentUser.longitude);
         const { long_name } = geolocation.getDistrictFromAddress(addresses);
         const userWithDistrict = Object.assign(currentUser, { district: long_name });
-        this.setState({ user: userWithDistrict, isEditable: params.user });
+        this.setState({ user: userWithDistrict, isEditable: !params.user });
     }
     render() {
         return (
