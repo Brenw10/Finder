@@ -34,8 +34,7 @@ export default class Home extends Component {
     menu(selectedMenu) {
         switch (selectedMenu.title) {
             case this.state.item.SAIR:
-                firebase.auth().signOut()
-                    .then(() => this.props.navigation.goBack());
+                firebase.auth().signOut().then(() => this.props.navigation.goBack());
         }
     }
     async setCurrentPosition(position) {

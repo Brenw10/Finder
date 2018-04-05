@@ -1,40 +1,51 @@
 PODS:
-  - Firebase/Auth (4.9.0):
+  - Firebase/Auth (4.11.0):
     - Firebase/Core
-    - FirebaseAuth (= 4.4.3)
-  - Firebase/Core (4.9.0):
-    - FirebaseAnalytics (= 4.0.9)
-    - FirebaseCore (= 4.0.15)
-  - Firebase/Database (4.9.0):
+    - FirebaseAuth (= 4.5.0)
+  - Firebase/Core (4.11.0):
+    - FirebaseAnalytics (= 4.1.0)
+    - FirebaseCore (= 4.0.18)
+  - Firebase/Database (4.11.0):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.4)
-  - Firebase/Storage (4.9.0):
+    - FirebaseDatabase (= 4.1.5)
+  - Firebase/Messaging (4.11.0):
     - Firebase/Core
-    - FirebaseStorage (= 2.1.2)
-  - FirebaseAnalytics (4.0.9):
+    - FirebaseMessaging (= 2.1.1)
+  - Firebase/Storage (4.11.0):
+    - Firebase/Core
+    - FirebaseStorage (= 2.1.3)
+  - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.3):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseAuth (4.5.0):
+    - FirebaseAnalytics (~> 4.1)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.15):
+  - FirebaseCore (4.0.18):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.4):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseDatabase (4.1.5):
+    - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.9):
+  - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
-  - FirebaseStorage (2.1.2):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseMessaging (2.1.1):
+    - FirebaseAnalytics (~> 4.1)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.5)
+  - FirebaseStorage (2.1.3):
+    - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/DebugUtils (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/Logger (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/NSData+zlib (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
@@ -42,39 +53,43 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
-  - GTMSessionFetcher/Core (1.1.13)
+  - GTMSessionFetcher/Core (1.1.14)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Protobuf (3.5.0)
   - QBImagePickerController (3.4.0)
-  - RSKImageCropper (2.0.0)
+  - RSKImageCropper (2.0.1)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - Firebase/Storage
   - QBImagePickerController
   - RSKImageCropper
 
 SPEC CHECKSUMS:
-  Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
-  FirebaseAnalytics: 388b630c15713f5dbf364071f5f3d6077fb52f4e
-  FirebaseAuth: aaaf68d5064a6c8fec435758f83a43b8db26ccaa
-  FirebaseCore: 3bd047463058fa6b5d312c97502c52e45401cdfb
-  FirebaseDatabase: de4446507ccd3257fca37d16f40e1540324571fd
-  FirebaseInstanceID: d2058a35e9bebda1b6dd42486b84917bde552a9d
-  FirebaseStorage: 181bb543d39ee3c53e0558de7ba86b1286a0427f
+  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
+  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
+  FirebaseAuth: 147bf340a0706b44ca1753d6b41ebafd9687cfe6
+  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
+  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  FirebaseMessaging: db0e01c52ef7e1f42846431273558107d084ede4
+  FirebaseStorage: 9a863a2bb96c406958eeff7c2f1dfa9f44c44a13
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMSessionFetcher: 5bb1eae636127de695590f50e7d248483eb891e6
+  GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
-  RSKImageCropper: d9a1acbc0600bf8decc8f0d21895872c99a9e4cf
+  RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
 
-PODFILE CHECKSUM: ac4d6126f199315bb364bf5a828a5e42c5596cc1
+PODFILE CHECKSUM: c032d8bca4c9b661acc3142a8db20887334e72fd
 
 COCOAPODS: 1.4.0
