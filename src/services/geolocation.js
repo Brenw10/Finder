@@ -19,5 +19,11 @@ export default {
         const { MAPS_API_KEY } = keys;
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAPS_API_KEY}`;
         return fetch(url).then(data => data.json()).then(data => data.results);
+    },
+    getDistrictFromAddress(addresses) {
+        const components = addresses[0].address_components;
+        const district = components.find(address => address.types.includes('sublocality_level_1'));
+        const city = components.find(address => address.types.includes('political'));
+        return district || city || 'Unknown Place';
     }
 }

@@ -38,19 +38,12 @@ export default class Home extends Component {
                     .then(() => this.props.navigation.goBack());
         }
     }
-    getDistrictFromAddress(addresses) {
-        const components = addresses[0].address_components;
-        const district = components.find(address => address.types.includes('sublocality_level_1'));
-        const city = components.find(address => address.types.includes('political'));
-        return district || city || 'Unknown Place';
-    }
     async setCurrentPosition(position) {
         const uid = firebase.auth().currentUser.uid;
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        const addresses = await geolocation.getAddressesByLatLong(latitude, longitude);
-        const { long_name } = this.getDistrictFromAddress(addresses);
-        firebase.database().ref(`users/${uid}`).update({ district: long_name, latitude, longitude });
+        const place = latitude + longitude;
+        firebase.database().ref(`users/${uid}`).update({ latitude, longitude, place });
     }
     render() {
         return (

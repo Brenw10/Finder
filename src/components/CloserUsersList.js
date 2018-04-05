@@ -17,30 +17,17 @@ export default class CloserUsersList extends Component {
         };
     }
     componentDidMount() {
-        this.refresh();
+        this.setUsers();
     }
-    refresh() {
-        this.fillCloserUsers();
-    }
-    async fillCloserUsers() {
+    async setUsers() {
         this.setState({ isRefreshing: true, isLoading: true });
-
         const currentUser = await user.getCurrentUser();
-        const users = await this.getUserByDisctrict(currentUser.district);
-
-        const usersWithDistance = this.setUsersDistance(currentUser, users);
+        const users = await user.getUsersByDistance(currentUser.latitude, currentUser.longitude, 5);
+        const usersWithDistance = this.setUsersDistance(currentUser.latitude, currentUser.longitude, users);
         const sortedUsers = usersWithDistance.sort((a, b) => a.distanceKm - b.distanceKm);
-
         this.setState({ users: sortedUsers, isRefreshing: false, isLoading: false });
     }
-    getUserByDisctrict(district) {
-        const usersRef = firebase.database().ref('users');
-        const query = usersRef.orderByChild('district').equalTo(district);
-        return query.once('value').then(data => Object.values(data.val()));
-    }
-    setUsersDistance(currentUser, users) {
-        const currentUserLat = currentUser.latitude;
-        const currentUserLong = currentUser.longitude;
+    setUsersDistance(currentUserLat, currentUserLong, users) {
         return users.map(user => {
             const distanceKm = geolocation.getDistanceFromLatLonInKm(currentUserLat, currentUserLong, user.latitude, user.longitude);
             return Object.assign(user, { distanceKm });
@@ -60,7 +47,7 @@ export default class CloserUsersList extends Component {
             <ListView
                 data={this.state.users}
                 loading={this.state.isRefreshing}
-                onRefresh={() => this.refresh()}
+                onRefresh={() => this.setUsers()}
                 renderRow={(user, index) => this.renderListItem(user, index)}
             />
         );

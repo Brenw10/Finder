@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from 'Finder/src/styles/Profile';
 import anonymous from 'Finder/src/images/anonymous.png';
-import user from 'Finder/src/services/user';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ProfileImage from 'Finder/src/components/ProfileImage';
+import geolocation from 'Finder/src/services/geolocation';
+import user from 'Finder/src/services/user';
 
 export default class Profile extends Component {
     static navigationOptions = {
@@ -19,14 +20,13 @@ export default class Profile extends Component {
     componentDidMount() {
         this.loadUser();
     }
-    loadUser() {
+    async loadUser() {
         const { params = {} } = this.props.navigation.state;
-        if (params.user) {
-            this.setState({ currentUser: params.user, isEditable: false });
-            return Promise.resolve(params.user);
-        } else {
-            return user.getCurrentUser().then(currentUser => this.setState({ currentUser, isEditable: true }));
-        }
+        const currentUser = params.user ? params.user : await user.getCurrentUser();
+        const addresses = await geolocation.getAddressesByLatLong(currentUser.latitude, currentUser.longitude);
+        const { long_name } = geolocation.getDistrictFromAddress(addresses);
+        const userWithDistrict = Object.assign(currentUser, { district: long_name });
+        this.setState({ user: userWithDistrict, isEditable: params.user });
     }
     render() {
         return (
@@ -48,18 +48,18 @@ export default class Profile extends Component {
         );
     }
     renderAvatar() {
-        const currentUser = this.state.currentUser;
-        const imageSource = currentUser && currentUser.photo_url ? { uri: currentUser.photo_url } : anonymous;
+        const user = this.state.user;
+        const imageSource = user && user.photo_url ? { uri: user.photo_url } : anonymous;
         return <Image source={imageSource} style={styles.avatar} />;
     }
     renderUser() {
-        if (!this.state.currentUser) return;
+        if (!this.state.user) return;
         return (
             <View style={styles.userContainer}>
-                <Text style={styles.userNameText}>{this.state.currentUser.name}</Text>
+                <Text style={styles.userNameText}>{this.state.user.name}</Text>
                 <View style={styles.locationContainer}>
                     <FontAwesome name='map-marker' color='white' size={22} />
-                    <Text style={styles.districtText}> {this.state.currentUser.district}</Text>
+                    <Text style={styles.districtText}> {this.state.user.district}</Text>
                 </View>
             </View>
         );
