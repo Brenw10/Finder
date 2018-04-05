@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableHighlight } from 'react-native';
-import styles from 'Finder/src/styles/CustomButton';
+import styles from 'Finder/src/styles/customButton';
 
 export default class CustomButton extends Component {
     render() {

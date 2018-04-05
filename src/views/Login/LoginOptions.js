@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import styles from 'Finder/src/styles/LoginOptions';
+import styles from 'Finder/src/styles/loginOptions';
 import CustomButton from 'Finder/src/components/CustomButton';
 import { View } from 'react-native-animatable';
 import PropTypes from 'prop-types';

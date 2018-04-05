@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from 'Finder/src/styles/SignUp';
+import styles from 'Finder/src/styles/signUp';
 import CustomTextInput from 'Finder/src/components/CustomTextInput';
 import CustomButton from 'Finder/src/components/CustomButton';
 import { Text, View } from 'react-native-animatable';

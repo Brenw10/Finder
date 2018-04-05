@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
-import styles from 'Finder/src/styles/CustomTextInput';
+import styles from 'Finder/src/styles/customTextInput';
 
 export default class CustomTextInput extends Component {
     constructor(props) {

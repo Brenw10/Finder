@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import CloserUsersList from 'Finder/src/components/CloserUsersList';
-import styles from 'Finder/src/styles/Home';
+import styles from 'Finder/src/styles/home';
 import geolocation from 'Finder/src/services/geolocation';
 import { NavigationBar, Icon, DropDownMenu } from '@shoutem/ui';
 

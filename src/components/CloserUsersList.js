@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import firebase from 'react-native-firebase';
-import styles from 'Finder/src/styles/CloserUsersList';
+import styles from 'Finder/src/styles/closerUsersList';
 import user from 'Finder/src/services/user';
 import geolocation from 'Finder/src/services/geolocation';
 import Spinner from 'react-native-loading-spinner-overlay';

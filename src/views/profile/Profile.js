@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import styles from 'Finder/src/styles/Profile';
+import styles from 'Finder/src/styles/profile';
 import anonymous from 'Finder/src/images/anonymous.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ProfileImage from 'Finder/src/components/ProfileImage';

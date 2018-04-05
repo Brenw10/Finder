@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, LayoutAnimation, KeyboardAvoidingView } from 'react-native';
-import styles from 'Finder/src/styles/Login';
+import styles from 'Finder/src/styles/login';
 import LoginOptions from 'Finder/src/views/login/LoginOptions';
 import SignIn from 'Finder/src/views/login/SignIn';
 import SignUp from 'Finder/src/views/login/SignUp';

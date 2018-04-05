@@ -5,7 +5,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import firebase from 'react-native-firebase';
 import upload from 'Finder/src/services/upload';
 import ImagePicker from 'react-native-image-crop-picker';
-import styles from 'Finder/src/styles/ProfileImage';
+import styles from 'Finder/src/styles/profileImage';
 
 export default class ProfileImage extends Component {
     constructor(props) {
