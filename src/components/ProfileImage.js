@@ -23,7 +23,7 @@ export default class ProfileImage extends Component {
         this.setState({ isLoading: true });
         const currentUser = firebase.auth().currentUser;
         const photo_url = await upload.uploadImage(`users/${currentUser.uid}`, 'profile', image);
-        await firebase.database().ref(`users/${currentUser.uid}`).update({ profile: photo_url });
+        await firebase.database().ref(`users/${currentUser.uid}`).update({ photo_url });
         await this.props.success();
         this.setState({ isLoading: false });
     }
