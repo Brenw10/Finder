@@ -10,8 +10,7 @@ import PropTypes from 'prop-types';
 export default class SignIn extends Component {
     static propTypes = {
         loadRegister: PropTypes.func.isRequired,
-        // todo: Bring toggle alert to this page
-        toggleAlert: PropTypes.func.isRequired
+        toggleErrorAlert: PropTypes.func.isRequired
     }
     constructor(props) {
         super(props);
@@ -27,7 +26,11 @@ export default class SignIn extends Component {
             .auth()
             .signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => this.setState({ isLoading: false }))
-            .catch(() => { this.setState({ isLoading: false }); this.props.toggleAlert(true); });
+            .catch(error => this.error(error));
+    }
+    error(error) {
+        this.setState({ isLoading: false });
+        this.props.toggleErrorAlert(true, error.message);
     }
     async loadRegister() {
         await this.submitRef.zoomOut(200);

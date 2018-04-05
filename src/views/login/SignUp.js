@@ -10,8 +10,7 @@ import PropTypes from 'prop-types';
 export default class SignUp extends Component {
     static propTypes = {
         loadLogin: PropTypes.func.isRequired,
-        // todo: Bring toggle alert to this page
-        toggleAlert: PropTypes.func.isRequired
+        toggleErrorAlert: PropTypes.func.isRequired
     }
     constructor(props) {
         super(props);
@@ -32,18 +31,18 @@ export default class SignUp extends Component {
     register(name, email, password) {
         this.setState({ isLoading: true });
         firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(data => this.success(data.user, name, email, password))
-            .catch(() => this.error());
+            .then(data => this.success(data.user.uid, name, email, password))
+            .catch(error => this.error(error));
     }
-    async success(user, name, email, password) {
-        await firebase.database().ref(`users/${user.uid}`).set({ name, uid: user.uid });
+    async success(uid, name, email, password) {
+        await firebase.database().ref(`users/${uid}`).set({ name, uid });
         firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
             .then(() => this.setState({ isLoading: false }))
-            .catch(() => this.error());
+            .catch(error => this.error(error));
     }
     error(error) {
         this.setState({ isLoading: false });
-        this.props.toggleAlert(true);
+        this.props.toggleErrorAlert(true, error.message);
     }
     async loadLogin() {
         await this.submitRef.zoomOut(200);

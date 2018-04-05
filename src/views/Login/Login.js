@@ -40,8 +40,8 @@ export default class Login extends Component {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         this.setState({ selectedView: this.state.views.SIGN_IN });
     }
-    toggleAlert(bool) {
-        this.setState({ isAlertEnabled: bool });
+    toggleErrorAlert(isAlertEnabled, errorMessage) {
+        this.setState({ isAlertEnabled, errorMessage });
     }
     render() {
         return (
@@ -55,7 +55,7 @@ export default class Login extends Component {
                     {this.renderSignIn()}
                     {this.renderSignUp()}
                 </KeyboardAvoidingView>
-                {this.renderAlert()}
+                {this.renderErrorAlert()}
             </View>
         );
     }
@@ -73,7 +73,7 @@ export default class Login extends Component {
         return (
             <SignIn
                 loadRegister={() => this.loadRegister()}
-                toggleAlert={bool => this.toggleAlert(bool)} />
+                toggleErrorAlert={(value, message) => this.toggleErrorAlert(value, message)} />
         );
     }
     renderSignUp() {
@@ -81,19 +81,20 @@ export default class Login extends Component {
         return (
             <SignUp
                 loadLogin={() => this.loadLogin()}
-                toggleAlert={bool => this.toggleAlert(bool)} />
+                toggleErrorAlert={(value, message) => this.toggleErrorAlert(value, message)} />
         );
     }
-    renderAlert() {
+    renderErrorAlert() {
         return (
             <AwesomeAlert title="An error has occurred"
-                message="Some information is not correct. Please rewrite and try again."
+                message={this.state.errorMessage}
                 show={this.state.isAlertEnabled}
                 showConfirmButton={true}
-                closeOnHardwareBackPress={true}
+                closeOnHardwareBackPress={false}
+                closeOnTouchOutside={false}
                 confirmText="Ok"
                 confirmButtonColor="#DD6B55"
-                onConfirmPressed={() => this.toggleAlert(false)} />
+                onConfirmPressed={() => this.toggleErrorAlert(false)} />
         );
     }
 }
