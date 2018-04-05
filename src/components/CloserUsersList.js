@@ -55,7 +55,7 @@ export default class CloserUsersList extends Component {
     renderListItem(user, index) {
         const distanceMeters = (user.distanceKm * 1000).toFixed(2);
         return (
-            <View>
+            <View style={styles.itemContainer}>
                 <TouchableOpacity onPress={() => this.props.openUser(user)}>
                     <ImageBackground styleName="large" source={user.photo_url ? { uri: user.photo_url } : null}>
                         <Tile>
